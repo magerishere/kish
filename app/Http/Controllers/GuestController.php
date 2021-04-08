@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\GuestRegister;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,7 +27,7 @@ class GuestController extends Controller
             ->with('error','email or password was wrong!');
     }
 
-    public function register(Request $request)
+    public function register(GuestRegister $request)
     {
         $user = User::create($request->all());
         DB::table('role_user')->insert(['user_id'=>$user->id]);
