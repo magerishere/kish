@@ -33,9 +33,11 @@
             <a href="{{ route('guest.login') }}" class="btn btn-primary">Login</a>
             <a href="{{ route('guest.register') }}" class="btn btn-info">Register</a>
         @else
+        <a href="{{ route('role.index') }}" class="btn btn-info">Role Handler</a>
+        <a href="{{ route('admin.index') }}" class="btn btn-success">Admin</a>
+
         <form action="{{ route('user.logout') }}" method="POST" class="d-flex">
             @csrf
-                    <a href="{{ route('admin.index') }}" class="btn btn-success">Admin</a>
 
                 <button type="submit" class="btn btn-danger">Logout</button>
             </form>

@@ -8,7 +8,12 @@
         <div class="col-md-6">
             <h4>Your email is : {{ $user->email }}</h4>
             <h5>Your role is :
-                <span>{{ $user->role->first()->name }}</span>
+                {{-- @foreach ($user->roles as $role)
+                    @foreach ($role as $privilage)
+                        <span>{{ $privilage->name}}, </span>
+                    @endforeach
+
+                @endforeach --}}
             </h5>
             <img width="50px" src="{{ $user->image ? $user->image->url : "/storage/images/avatar.png" }}" alt="Image">
             <a href="{{ route('user.show',$user->id) }}" class="btn btn-primary">Edit Profile</a>

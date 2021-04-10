@@ -7,8 +7,9 @@
             <tr>
                 <th>#</th>
                 <th>Email</th>
+                <th>User Privilage</th>
                 <th>Image</th>
-                <th>Role</th>
+                <th>Roles</th>
 
             </tr>
         </thead>
@@ -18,17 +19,20 @@
                     <td>{{ $user->id }}</td>
                     <td>{{ $user->email }}</td>
                     <td>
-                        <img width="50px" src="{{ $user->image ? $user->image->url : '/storage/images/avatar.png' }}" alt="Image user">
+                        @foreach ($user->roles as $role)
+                            <span>{{ $role->name }},</span>
+                        @endforeach
+                    </td>
+                    <td>
+                        <img width="50px" src="{{ $user->image ? $user->image->url : '/storage/images/avatar.png' }}"
+                            alt="Image user">
                     </td>
                     <td>
                         <form action="{{ route('admin.roleUserHandler') }}" method="POST">
                             @csrf
                             <select name="role_id">
-                                <option value="{{ $user->role->first()->id }}">{{ $user->role->first()->name }}</option>
                                 @foreach ($roles as $role)
-                                    @if ($role->id != $user->role->first()->id)
-                                        <option value="{{ $role->id }}">{{ $role->name }}</option>
-                                    @endif
+                                    <option value="{{ $role->id }}">{{ $role->name }}</option>
                                 @endforeach
                             </select>
                             <input type="hidden" name="user_id" value="{{ $user->id }}">

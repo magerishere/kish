@@ -24,6 +24,8 @@ class UserUpdateRequest extends FormRequest
     public function rules()
     {
         return [
+            'phone_number' => 'max:11',
+            'year' => 'max:3',
             'image' => 'mimes:jpg,jpeg,png',
         ];
     }

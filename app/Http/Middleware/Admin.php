@@ -16,9 +16,12 @@ class Admin
      */
     public function handle(Request $request, Closure $next)
     {
-        if(auth()->user()->role->first()->id !== 1)
+        foreach(auth()->user()->roles as $role)
         {
-            abort(404);
+            if($role->name != 'admin')
+            {
+                abort(404);
+            }
         }
         return $next($request);
     }

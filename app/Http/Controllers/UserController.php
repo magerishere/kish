@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\UserHandlerEvent;
+use App\Http\Controllers\UserService\Update;
 use App\Http\Requests\UserUpdateRequest;
-use App\Models\Image;
 use App\Models\User;
-use App\Models\UserMeta;
 use Illuminate\Http\Request;
 
 
@@ -21,9 +19,7 @@ class UserController extends Controller
     public function index()
     {
         $user = auth()->user();
-        //if roleId == 1 means user is admin
-        $roleId = auth()->user()->role->first()->id;
-        return view('users.dashboard',compact('user','roleId'));
+        return view('users.dashboard',compact('user'));
     }
 
     /**
@@ -79,37 +75,8 @@ class UserController extends Controller
      */
     public function update(UserUpdateRequest $request, User $user)
     {
-        // event(new UserHandlerEvent($request,$user));
 
-        // Image update handler
-        if($file = $request->file('image'))
-        {
-            $file->store('public/images');
-            if($user->image)
-            {
-
-                Image::where('imageable_id',$user->id)
-                    ->update(['url'=>$file->hashName()]);
-            } else {
-                Image::create([
-                    'url' => $file->hashName(),
-                    'imageable_id' => $user->id,
-                    'imageable_type' => "User",
-                    ]);
-            }
-        }
-
-        // User meta update handler
-        if($user->meta)
-        {
-            UserMeta::where('user_id',$user->id)
-                ->update($request->except(['image','_token',"_method"]));
-        } else {
-            UserMeta::create($request->except('url'));
-        }
-
-        return back()
-            ->with('success','Your profile has been updated');
+       return app(Update::class)($user,$request);
     }
 
     /**

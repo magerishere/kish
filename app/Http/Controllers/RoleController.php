@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Role;
-use App\Models\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-class AdminController extends Controller
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +15,8 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $users = User::all()->except(auth()->id());
         $roles = Role::all();
-        return view('admin.dashboard',compact('users','roles'));
+        return view('admin.role',compact('roles'));
     }
 
     /**
@@ -39,57 +37,72 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            Role::create($request->all());
+
+        } catch(ModelNotFoundException $exception) {
+            report($exception);
+            return back()->withError($exception->getMessage());
+        }
+        return back()
+            ->withSuccess(__('messages.success'));
     }
 
     /**
      * Display the specified resource.
      *
+     * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show(Role $role)
     {
-
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit(Role $role)
     {
         //
     }
+
+
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, Role $role)
     {
-
+        $role->update([
+            'name'=>$request->name,
+        ]);
+        return response()->json(['status'=>200]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
+     * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function destroy()
+    public function destroy(Role $role)
     {
-        //
-    }
-
-    public function roleUserHandler(Request $request)
-    {
-
-        DB::table('role_user')
-            ->where(['user_id'=>$request->user_id])
-            ->update(['privilages'=>$request->role_id]);
-
+        try {
+            $role->delete();
+        } catch(ModelNotFoundException $exception) {
+            report($exception);
+            return back()
+                ->withError($exception->getMessage());
+        }
         return back()
-            ->with('success','User has been updated!');
+            ->withSuccess(__('messages.success'));
     }
 }

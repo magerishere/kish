@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\GuestRegister;
-use App\Models\User;
+use App\Http\Controllers\GuestService\Login;
+use App\Http\Controllers\GuestService\Register;
+use App\Http\Requests\GuestRegisterRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+
 
 class GuestController extends Controller
 {
@@ -17,22 +17,14 @@ class GuestController extends Controller
      */
     public function login(Request $request)
     {
-        if(Auth::attempt($request->except('_token')))
-        {
-            return redirect()
-                ->route('user.index')
-                ->with('success','you logged succesfuly');
-        }
-        return back()
-            ->with('error','email or password was wrong!');
+        return app(Login::class)($request);
     }
 
-    public function register(GuestRegister $request)
+    public function register(GuestRegisterRequest $request)
     {
-        $user = User::create($request->all());
-        DB::table('role_user')->insert(['user_id'=>$user->id]);
-        return back()
-            ->with('success','your register was successfuly!');
+        return app(Register::class)($request);
     }
+
+
 
 }
