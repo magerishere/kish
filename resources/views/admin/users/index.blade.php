@@ -2,15 +2,17 @@
 
 
 @section('content')
+    <h1 class="text-center">User Lists</h1>
+    <hr>
     <table class="table table-hover">
         <thead>
             <tr>
                 <th>#</th>
                 <th>Email</th>
-                <th>User Privilage</th>
                 <th>Image</th>
                 <th>Roles</th>
-
+                <th>Permissions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -19,23 +21,21 @@
                     <td>{{ $user->id }}</td>
                     <td>{{ $user->email }}</td>
                     <td>
+                        <img width="50px" src="{{ $user->image ? $user->image->url : '/storage/images/avatar.png' }}"
+                            alt="Image user">
+                    </td>
+                    <td>
                         @foreach ($user->roles as $role)
                             <span>{{ $role->name }},</span>
                         @endforeach
                     </td>
                     <td>
-                        <img width="50px" src="{{ $user->image ? $user->image->url : '/storage/images/avatar.png' }}"
-                            alt="Image user">
+                        @foreach ($user->permissions as $permission)
+                            <span>{{ $permission->name }}, </span>
+                        @endforeach
                     </td>
                     <td>
-                        <form action="{{ route('admin.usersList') }}" method="POST">
-                            @csrf
-                            <select name="role_id">
-
-                            </select>
-                            <input type="hidden" name="user_id" value="{{ $user->id }}">
-                            <button type="submit" class="btn btn-primary">Update</button>
-                        </form>
+                        <a href="{{ route('admin.userList',$user->id) }}" class="btn btn-primary">Update</a>
                     </td>
                 </tr>
             @endforeach

@@ -1,9 +1,11 @@
 @extends('layouts.main')
 
 
+
 @section('content')
     <div class="row">
-
+        <h1 class="text-center">Permissions</h1>
+        <hr>
         <div class="col-md-6">
             <table class="table table-hover">
                 <thead>
@@ -14,24 +16,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($roles as $role)
+                    @foreach ($permissions as $permission)
                         <tr>
-                            <td>{{ $role->id }}</td>
-                            <td onclick="editHandler({{ $role->id }})">
-                                <input type="text" id="role{{ $role->id }}" value="{{ $role->name }}"
+                            <td>{{ $permission->id }}</td>
+                            <td onclick="editHandler({{ $permission->id }})">
+                                <input type="text" id="permission{{ $permission->id }}" value="{{ $permission->name }}"
                                     class="text-center" disabled>
-                                <span id="message{{ $role->id }}"></span>
+                                <span id="message{{ $permission->id }}"></span>
                             </td>
 
                             <td>
 
                                 <button class="btn btn-warning"
-                                    onclick="rolePrivilageHandler({{ $role->id }})">{{ __('pages/admin/role.privilage') }}</button>
-                                <form action="{{ route('role.destroy', $role->id) }}" method="POST">
+                                    onclick="rolePermissionHandler({{ $permission->id }})">{{ __('pages/admin/role.permissions') }}</button>
+                                <form action="{{ route('role.destroy', $permission->id) }}" method="POST">
                                     @csrf
                                     @method("DELETE")
                                     <button class="btn btn-danger"
-                                        type="submit">{{ __('pages/admin/role.delete') }}</button>
+                                        type="submit">{{ __('pages/admin/permission.delete') }}</button>
                                 </form>
                             </td>
                         </tr>
@@ -40,17 +42,17 @@
             </table>
         </div>
         <div class="col-md-6">
-            <h5>{{ __('pages/admin/role.create') }}</h5>
+            <h5>{{ __('pages/admin/permission.create') }}</h5>
             <hr>
-            <form action="{{ route('role.store') }}" method="POST" class="d-flex">
+            <form action="{{ route('permission.store') }}" method="POST" class="d-flex">
                 @csrf
                 <div class="mb-3">
-                    <label for="name">{{ __('pages/admin/role.name') }}</label>
+                    <label for="name">{{ __('pages/admin/permission.name') }}</label>
                     <input type="text" name="name" id="name" class="form-control" autofocus required>
-                    <button type="submit" class="btn btn-primary">{{ __('pages/admin/role.create') }}</button>
+                    <button type="submit" class="btn btn-primary">{{ __('pages/admin/permission.create') }}</button>
                 </div>
             </form>
-            <div id="privilage">
+            <div id="permission">
 
             </div>
         </div>
@@ -75,15 +77,16 @@
         }
 
 
-        const rolePrivilageHandler = (id) => {
+        const rolePermissionHandler = (id) => {
             const form = `
-                        <label for="">{{ __('pages/admin/role.privilage') }}</label>
+                        <label for="">{{ __('pages/admin/role.permissions') }}</label>
                         <ul>
-                            <li><input type="checkbox" name="checkBox[]" onclick="selectedCheckBoxHandler(10)">Create User</li>
-                            <li><input type="checkbox" name="checkBox[]"  onclick="selectedCheckBoxHandler(11)">Create Post</li>
+                            @foreach($permissions as $permission)
+                                <li><input type="checkbox" name="checkBox[]" onclick="selectedCheckBoxHandler({{ $permission->id }})">{{ $permission->name }}</li>
+                            @endforeach
                         </ul>
-                        <button type="button" onclick="rolePrivilageSubmit(${id})" class="btn btn-primary">Change</button>`;
-            document.getElementById('privilage').innerHTML = form;
+                        <button type="button" onclick="rolePermissionSubmit(${id})" class="btn btn-primary">Change</button>`;
+            document.getElementById('permission').innerHTML = form;
         }
 
 
@@ -97,10 +100,10 @@
             console.log(ids);
         }
 
-        const rolePrivilageSubmit = (id) => {
+        const rolePermissionSubmit = (id) => {
             $.ajax({
-                url: '/role-privilage/' + id,
-                type: "POST",
+                url: '/role/' + id,
+                type: "PATCH",
                 data: {ids},
                 success:function(res) {
                     console.log(res);
@@ -136,3 +139,4 @@
 
     </script>
 @endsection
+

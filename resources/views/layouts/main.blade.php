@@ -33,8 +33,9 @@
             <a href="{{ route('guest.login') }}" class="btn btn-primary">Login</a>
             <a href="{{ route('guest.register') }}" class="btn btn-info">Register</a>
         @else
-        <a href="{{ route('role.index') }}" class="btn btn-info">Role Handler</a>
-        <a href="{{ route('admin.index') }}" class="btn btn-success">Admin</a>
+        <a href="{{ route('permission.index') }}" class="btn btn-warning">Permissions</a>
+        <a href="{{ route('role.index') }}" class="btn btn-info">Roles</a>
+        <a href="{{ route('admin.usersList') }}" class="btn btn-success">Users list</a>
 
         <form action="{{ route('user.logout') }}" method="POST" class="d-flex">
             @csrf

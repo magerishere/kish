@@ -7,5 +7,6 @@ return [
     'delete'    => 'Delete',
     'create'    => 'Create',
     'permissions' => 'Permissions',
-    
+    'update-permissions' => 'Update Permissions',
+
 ];
