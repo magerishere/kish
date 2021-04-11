@@ -5,6 +5,7 @@ use App\Http\Controllers\GuestController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\DemoController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -88,3 +89,15 @@ use Illuminate\Support\Facades\Route;
 
         return back()->with('message', 'Verification link sent!');
     })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Import Excel Routes
+|--------------------------------------------------------------------------
+*/
+    Route::get('export', [DemoController::class,'export'])->name('export');
+    Route::get('registrations/export_mapping', [DemoController::class, 'export_mapping'])->name('registrations.export_mapping') ;
+    Route::get('importExportView', [DemoController::class,'importExportView']);
+    Route::post('import', [DemoController::class,'import'])->name('import');
