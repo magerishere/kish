@@ -3,8 +3,7 @@
 
 @section('content')
     <h1 class="text-center">User Lists</h1>
-    <a class="btn btn-success" href="{{ route('export') }}">Export User Data</a>
-    <a href="{{ route('registrations.export_mapping') }}" class="btn btn-dark fright">Export Registration with relational data <i class="fas fa-download"></a>
+    <a href="{{ route('registrations.export_mapping') }}" class="btn btn-dark fright">Export All Users in excel file <i class="fas fa-download"></a>
 
     <hr>
     <table class="table table-hover">

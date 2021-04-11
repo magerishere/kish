@@ -7,6 +7,7 @@ use App\Mail\ChangeUserProfileMail;
 use App\Models\Image;
 use App\Models\UserMeta;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class Update {
 
@@ -19,7 +20,6 @@ class Update {
              $file->store('public/images');
              if($user->image)
              {
-
                  Image::where('imageable_id',$user->id)
                      ->update(['url'=>$file->hashName()]);
              } else {

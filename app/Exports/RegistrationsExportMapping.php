@@ -7,9 +7,18 @@ use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\WithDrawings;
+use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
+
 
 class RegistrationsExportMapping implements FromCollection, WithMapping, WithHeadings
 {
+
+    private $allUsers;
+    public function __construct()
+    {
+        $this->allUsers = User::all();
+    }
     /**
     * @return \Illuminate\Support\Collection
     */
@@ -24,11 +33,12 @@ class RegistrationsExportMapping implements FromCollection, WithMapping, WithHea
             $user->id,
             $user->email,
             $user->meta ? $user->meta->name : 'Not set',
-            $user->meta ? $user->meta->gender : 'Not set',
+            $user->meta ? $user->meta->gender ? 'Female' : 'Male' : 'Not set',
             $user->meta ? $user->meta->phone_number : 'Not set',
             $user->meta ? $user->meta->address : 'Not set',
             'roles' => array(),
             'permissions' => array(),
+            $user->image ? env('APP_URL') . $user->image->url : env('APP_URL') .  '/storage/images/avatar.png',
 
         );
         foreach ($user->roles as $role) {
@@ -38,11 +48,13 @@ class RegistrationsExportMapping implements FromCollection, WithMapping, WithHea
         foreach ($user->permissions as $permission) {
             $data['permissions'][] = $permission->name;
         }
-     
+
         return $data;
 
 
     }
+
+
 
     public function headings() : array {
         return [
@@ -54,6 +66,7 @@ class RegistrationsExportMapping implements FromCollection, WithMapping, WithHea
            'address',
            'roles',
            'permissions',
+           'images',
 
         ] ;
     }

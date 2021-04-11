@@ -26,7 +26,7 @@ class DemoController extends Controller
 
     public function export_mapping()
     {
-        return Excel::download( new RegistrationsExportMapping(), 'registrations.xlsx') ;
+        return Excel::download( new RegistrationsExportMapping(), 'users-list.xlsx') ;
     }
 
     public function import()

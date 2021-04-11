@@ -78,7 +78,9 @@ class PermissionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $permission = Permission::findById($id);
+
+        $permission->update(['name'=>$request->name]);
     }
 
     /**
@@ -89,6 +91,9 @@ class PermissionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $permission = Permission::findOrFail($id);
+        $permission->delete();
+        return back()
+            ->withSuccess('Permission has been deleted!');
     }
 }

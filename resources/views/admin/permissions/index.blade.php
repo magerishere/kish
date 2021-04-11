@@ -11,8 +11,8 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>{{ __('pages/admin/role.name') }}</th>
-                        <th>{{ __('pages/admin/role.actions') }}</th>
+                        <th>{{ __('pages/admin/permission.name') }}</th>
+                        <th>{{ __('pages/admin/permission.actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -26,10 +26,7 @@
                             </td>
 
                             <td>
-
-                                <button class="btn btn-warning"
-                                    onclick="rolePermissionHandler({{ $permission->id }})">{{ __('pages/admin/role.permissions') }}</button>
-                                <form action="{{ route('role.destroy', $permission->id) }}" method="POST">
+                                <form action="{{ route('permission.destroy', $permission->id) }}" method="POST">
                                     @csrf
                                     @method("DELETE")
                                     <button class="btn btn-danger"
@@ -52,9 +49,7 @@
                     <button type="submit" class="btn btn-primary">{{ __('pages/admin/permission.create') }}</button>
                 </div>
             </form>
-            <div id="permission">
 
-            </div>
         </div>
 
     </div>
@@ -71,22 +66,9 @@
         let message;
         let ids = [];
         const editHandler = (id) => {
-            currentInput = document.getElementById(`role${id}`);
+            currentInput = document.getElementById(`permission${id}`);
             currentInput.disabled = false;
             currentId = id;
-        }
-
-
-        const rolePermissionHandler = (id) => {
-            const form = `
-                        <label for="">{{ __('pages/admin/role.permissions') }}</label>
-                        <ul>
-                            @foreach($permissions as $permission)
-                                <li><input type="checkbox" name="checkBox[]" onclick="selectedCheckBoxHandler({{ $permission->id }})">{{ $permission->name }}</li>
-                            @endforeach
-                        </ul>
-                        <button type="button" onclick="rolePermissionSubmit(${id})" class="btn btn-primary">Change</button>`;
-            document.getElementById('permission').innerHTML = form;
         }
 
 
@@ -100,26 +82,13 @@
             console.log(ids);
         }
 
-        const rolePermissionSubmit = (id) => {
-            $.ajax({
-                url: '/role/' + id,
-                type: "PATCH",
-                data: {ids},
-                success:function(res) {
-                    console.log(res);
-                },error:function(err) {
-                    console.log(err)
-                },
-            });
-        }
-
 
         $(document).on('keypress',function(e) {
-            currentName = document.getElementById(`role${currentId}`).value;
+            currentName = document.getElementById(`permission${currentId}`).value;
             if(e.which == 13) {
                 $.ajax({
                     type: "PATCH",
-                    url:  `/role/${currentId}`,
+                    url:  `/permission/${currentId}`,
                     data: {name:currentName},
                     success:function(res) {
                         if(message) message.innerHTML = '';
