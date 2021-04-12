@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\PermissionService\Destroy;
+use App\Http\Controllers\PermissionService\Index;
+use App\Http\Controllers\PermissionService\Store;
+use App\Http\Controllers\PermissionService\Update;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Permission;
-use Throwable;
+
 
 class PermissionController extends Controller
 {
@@ -15,8 +18,7 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        $permissions = Permission::all();
-        return view('admin.permissions.index',compact('permissions'));
+        return app(Index::class)($this);
     }
 
     /**
@@ -37,14 +39,7 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        try {
-            Permission::create(['name'=>$request->input('name')]);
-        } catch(Throwable $exception) {
-            return back()
-                ->withError('cannot store permission' . $exception);
-        }
-        return back()
-            ->withSuccess('permission has been created');
+        return app(Store::class)($request);
     }
 
     /**
@@ -78,9 +73,7 @@ class PermissionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $permission = Permission::findById($id);
-
-        $permission->update(['name'=>$request->name]);
+        return app(Update::class)($request,$id);
     }
 
     /**
@@ -91,9 +84,6 @@ class PermissionController extends Controller
      */
     public function destroy($id)
     {
-        $permission = Permission::findOrFail($id);
-        $permission->delete();
-        return back()
-            ->withSuccess('Permission has been deleted!');
+        return app(Destroy::class)($id);
     }
 }

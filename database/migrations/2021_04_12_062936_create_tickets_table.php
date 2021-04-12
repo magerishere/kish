@@ -16,7 +16,7 @@ class CreateTicketsTable extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->mediumIncrements('id');
-            $table->string('ticket_id');
+            $table->string('ticket_id')->unique();
             $table->mediumInteger('from');
             $table->mediumInteger('to');
             $table->string('title',120);

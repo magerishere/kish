@@ -1,5 +1,14 @@
 @include('layouts.header')
+@auth
+@php
 
+    $countNotifications = \Illuminate\Support\Facades\DB::table('notifications')
+    ->where('notifiable_id',auth()->user()->id)
+    ->whereNull('read_at')
+    ->count()
+
+@endphp
+@endauth
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <a class="navbar-brand" href="{{ route('user.index') }}">Dashboard</a>
@@ -34,7 +43,9 @@
             <a href="{{ route('guest.register') }}" class="btn btn-info">Register</a>
         @else
         <a href="{{ route('ticket.index') }}" class="btn btn-secondary">Tickets</a>
-        <a href="{{ route('user.notification') }}" class="btn btn-light">Notification</a>
+        <a href="{{ route('user.notification') }}" class="btn btn-light">Notification
+        <span>{{ $countNotifications }}</span>
+        </a>
         <a href="{{ route('admin.index') }}" class="btn btn-dark">Chart Users</a>
         <a href="{{ route('permission.index') }}" class="btn btn-warning">Permissions</a>
         <a href="{{ route('role.index') }}" class="btn btn-info">Roles</a>

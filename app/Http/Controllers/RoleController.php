@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\RoleService\Destroy;
+use App\Http\Controllers\RoleService\Edit;
+use App\Http\Controllers\RoleService\Index;
+use App\Http\Controllers\RoleService\Store;
+use App\Http\Controllers\RoleService\Update;
+use App\Http\Controllers\RoleService\UpdatePermissions;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
-use Throwable;
+
 
 class RoleController extends Controller
 {
@@ -17,10 +20,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-
-        $roles = Role::all();
-
-        return view('admin.roles.index',compact('roles'));
+        return app(Index::class)($this);
     }
 
     /**
@@ -41,14 +41,7 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        try {
-            Role::create(['name'=>$request->input('name')]);
-        } catch(Throwable $exeption) {
-            return back()
-                ->withError('cannot store role' . $exeption);
-        }
-        return back()
-            ->withSuccess('role has been created!');
+        return app(Store::class)($request);
     }
 
     /**
@@ -70,10 +63,7 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-
-        $role = Role::findById($id);
-        $permissions = Permission::all();
-        return view('admin.roles.edit',compact('role','permissions'));
+        return app(Edit::class)($id);
     }
 
     /**
@@ -85,9 +75,7 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $role = Role::findById($id);
-
-        $role->update(['name'=>$request->name]);
+       return app(Update::class)($request,$id);
     }
 
     /**
@@ -98,24 +86,11 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        $role = Role::findOrFail($id);
-        $role->delete();
-        return back()
-            ->withSuccess('Role has been deleted!');
+        return app(Destroy::class)($id);
     }
 
     public function updatePermissions(Request $request,$id)
     {
-        $role = Role::findById($id);
-
-        try {
-            $role->syncPermissions($request->ids);
-
-        } catch(Throwable $exeption) {
-            return back()
-                ->withError('cannot update this role permissions' . $exeption);
-        }
-        return back()
-            ->withSuccess('role permissions succesfuly update!');
+        return app(UpdatePermissions::class)($request,$id);
     }
 }

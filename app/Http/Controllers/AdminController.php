@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\UserMeta;
+use App\Http\Controllers\AdminService\Index;
+use App\Http\Controllers\AdminService\RoleUserHandler;
+use App\Http\Controllers\AdminService\UserList;
+use App\Http\Controllers\AdminService\UserListRolePermissionHandler;
+use App\Http\Controllers\AdminService\UsersList;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
+
 
 class AdminController extends Controller
 {
@@ -18,16 +19,8 @@ class AdminController extends Controller
      */
     public function index()
     {
+        return app(Index::class)($this);
 
-        $users = User::all();
-        $usersMeta = UserMeta::all();
-        // count for charts
-        $total = $users->count();
-        $female = $usersMeta->where('gender',1)->count();
-        $male = $usersMeta->where('gender',0)->count();
-        $avgYear = $usersMeta->avg('year');
-        
-        return view('admin.index',compact('total','female','male','avgYear'));
     }
 
     /**
@@ -93,37 +86,26 @@ class AdminController extends Controller
 
     public function roleUserHandler(Request $request)
     {
+        return app(RoleUserHandler::class)($request);
 
-        DB::table('role_user')
-            ->where(['user_id'=>$request->user_id])
-            ->update(['privilages'=>$request->role_id]);
-
-        return back()
-            ->with('success','User has been updated!');
     }
 
     //Show specific user for update roles and permissions
     public function userList($id)
     {
-        $user = User::findOrFail($id);
-        $roles = Role::all();
-        $permissions = Permission::all();
-        return view('admin.users.show',compact('user','roles','permissions'));
+        return app(UserList::class)($id);
     }
 
     // Show all users in site
     public function usersList()
     {
-        $users = User::all();
-        return view('admin.users.index',compact('users'));
+        return app(UsersList::class)($this);
     }
 
 
     public function userListRolePermissionHandler(Request $request,$id)
     {
-        $user = User::findOrFail($id);
-        $user->syncRoles($request->roleIds);
-        $user->syncPermissions($request->permissionIds);
+       return app(UserListRolePermissionHandler::class)($request,$id);
 
     }
 }

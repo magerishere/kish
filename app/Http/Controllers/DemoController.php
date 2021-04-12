@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Exports\RegistrationsExportMapping;
-use App\Exports\UserExport;
-use Illuminate\Http\Request;
 use App\Exports\UsersExport;
 use App\Imports\UsersImport;
 use App\Models\User;

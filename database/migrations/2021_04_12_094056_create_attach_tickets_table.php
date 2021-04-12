@@ -16,7 +16,7 @@ class CreateAttachTicketsTable extends Migration
         Schema::create('attach_tickets', function (Blueprint $table) {
             $table->mediumIncrements('id');
             $table->string('ticket_id');
-            $table->string('url',50);
+            $table->string('url',50)->unique();
             $table->timestamps();
         });
     }

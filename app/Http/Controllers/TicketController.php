@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AttachTicket;
-use App\Models\ChildTicket;
+use App\Http\Controllers\TicketService\ChildTicketHandler;
+use App\Http\Controllers\TicketService\CloseTicket;
+use App\Http\Controllers\TicketService\Destroy;
+use App\Http\Controllers\TicketService\Index;
+use App\Http\Controllers\TicketService\OpenTicket;
+use App\Http\Controllers\TicketService\Show;
+use App\Http\Controllers\TicketService\Store;
 use App\Models\Ticket;
-use App\Models\User;
-use App\Notifications\UserNotification;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use Throwable;
 
 class TicketController extends Controller
 {
@@ -20,15 +21,7 @@ class TicketController extends Controller
      */
     public function index()
     {
-        $user = auth()->user();
-        if($user->hasRole('admin'))
-        {
-            $tickets = Ticket::orderByDesc('created_at')->where('to',$user->id)->get();
-
-        } else {
-            $tickets = Ticket::orderByDesc('created_at')->where('from',$user->id)->get();
-        }
-        return view('users.tickets.index',compact('tickets'));
+        return app(Index::class)($this);
     }
 
     /**
@@ -49,23 +42,7 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
-
-        try {
-            Ticket::create($request->except('attach'));
-            if($file = $request->file('attach'))
-            {
-                $file->store('public/images');
-                AttachTicket::create([
-                    'ticket_id' => $request->ticket_id,
-                    'url' => $file->hashName(),
-                ]);
-            }
-        } catch(Throwable $e) {
-            return back()
-                ->withError($e->getMessage());
-        }
-        return back()
-            ->withSuccess('Your ticket has been sent');
+        return app(Store::class)($request);
     }
 
     /**
@@ -76,8 +53,7 @@ class TicketController extends Controller
      */
     public function show($ticket_id)
     {
-        $ticket = Ticket::where('ticket_id',$ticket_id)->first();
-        return view('users.tickets.show',compact('ticket'));
+        return app(Show::class)($ticket_id);
     }
 
     /**
@@ -88,7 +64,7 @@ class TicketController extends Controller
      */
     public function edit(Ticket $ticket)
     {
-        return 'edited';
+        //
     }
 
     /**
@@ -111,65 +87,21 @@ class TicketController extends Controller
      */
     public function destroy(Ticket $ticket)
     {
-        try {
-            foreach($ticket->child as $child)
-            {
-                $child->delete();
-            }
-            $ticket->delete();
-            return back()
-                ->withSuccess('ticket has been deleted');
-
-        } catch(Throwable $e) {
-            return back()
-                ->withError($e->getMessage());
-        }
+        return app(Destroy::class)($ticket);
     }
 
     public function closeTicket($ticket_id)
     {
-        $ticket = Ticket::where('ticket_id',$ticket_id)->first();
-        $ticket->update([
-            'close' => 1,
-        ]);
-        return back()
-            ->withSuccess('ticket has been closed');
+        return app(CloseTicket::class)($ticket_id);
     }
 
     public function openTicket($ticket_id)
     {
-        $ticket = Ticket::where('ticket_id',$ticket_id)->first();
-        $ticket->update([
-            'close' => 0,
-        ]);
-        return back()
-            ->withSuccess('ticket has been opened');
+        return app(OpenTicket::class)($ticket_id);
     }
 
     public function childTicket(Request $request)
     {
-        try {
-            ChildTicket::create($request->except('answear'));
-                $ticket = Ticket::where('ticket_id',$request->ticket_id)->first();
-                $ticket->update([
-                    'answear' => $request->answear,
-                ]);
-            //if admin answear ticket send notification to user
-            if(auth()->user()->hasRole('admin'))
-            {
-                $user = User::where('id',$request->to)->first();
-                $values = [$ticket->subject,$ticket->title];
-                $subject = 'User Notification';
-                $message = 'your ticket answeared by ' . $user->email;
-                $user->notify(new UserNotification($subject,$values,$message));
-
-            }
-            return back()
-                ->withSuccess('Your ticket has been sent');
-
-        } catch(Throwable $e) {
-            return back()
-                ->withError($e->getMessage());
-        }
+        return app(ChildTicketHandler::class)($request);
     }
 }

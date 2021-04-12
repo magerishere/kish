@@ -116,7 +116,3 @@ use Illuminate\Support\Facades\Route;
     Route::get('registrations/export_mapping', [DemoController::class, 'export_mapping'])->name('registrations.export_mapping') ;
     Route::get('importExportView', [DemoController::class,'importExportView']);
     Route::post('import', [DemoController::class,'import'])->name('import');
-
-
-
-

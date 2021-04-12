@@ -4,15 +4,19 @@ namespace App\Http\Controllers\GuestService;
 
 use App\Jobs\SendEmailVerificationJob;
 use App\Models\User;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
-
+use Throwable;
 
 class Register {
     public function __invoke($request)
     {
-        $user = User::create($request->all());
-        dispatch(new SendEmailVerificationJob($user));
+        try{
+            $user = User::create($request->all());
+            dispatch(new SendEmailVerificationJob($user));
+
+        } catch(Throwable $e) {
+            return back()
+            ->withError($e->getMessage());
+        }
         return app(Login::class)($request);
     }
 }

@@ -1,10 +1,13 @@
 @extends('layouts.main')
 
+@section('content')
+
+<canvas id="myChart" width="80" height="30"></canvas>
+@endsection
 
 
 
 @section('footer')
-<canvas id="myChart" width="400" height="150"></canvas>
 <script src="{{ asset('assets/js/charts.js') }}"></script>
 <script>
 var ctx = document.getElementById('myChart').getContext('2d');
