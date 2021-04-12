@@ -105,7 +105,7 @@ class UserController extends Controller
         $notifications = DB::table('notifications')
                             ->where('notifiable_id',auth()->user()->id)
                             ->get();
-
+        
         return view('users.notification',compact('notifications'));
     }
 

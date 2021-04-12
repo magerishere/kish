@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\AttachTicket;
 use App\Models\ChildTicket;
 use App\Models\Ticket;
+use App\Models\User;
+use App\Notifications\UserNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Throwable;
@@ -152,7 +154,16 @@ class TicketController extends Controller
                 $ticket->update([
                     'answear' => $request->answear,
                 ]);
+            //if admin answear ticket send notification to user
+            if(auth()->user()->hasRole('admin'))
+            {
+                $user = User::where('id',$request->to)->first();
+                $values = [$ticket->subject,$ticket->title];
+                $subject = 'User Notification';
+                $message = 'your ticket answeared by ' . $user->email;
+                $user->notify(new UserNotification($subject,$values,$message));
 
+            }
             return back()
                 ->withSuccess('Your ticket has been sent');
 

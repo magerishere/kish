@@ -36,11 +36,11 @@ class Update {
 
          if($user->meta) // check if user had meta
          {
-             $user->meta->name = $request->input('name');
-             $user->meta->gender = $request->input('gender');
-             $user->meta->phone_number = $request->input('phone_number');
-             $user->meta->address = $request->input('address');
-             $user->meta->year = $request->input('year');
+             $user->meta->name          = $request->input('name');
+             $user->meta->gender        = $request->input('gender');
+             $user->meta->phone_number  = $request->input('phone_number');
+             $user->meta->address       = $request->input('address');
+             $user->meta->year          = $request->input('year');
 
              // Check for which send email profile updated
             $values = [];
