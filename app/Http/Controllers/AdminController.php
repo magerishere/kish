@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\UserMeta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
@@ -17,9 +18,16 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $users = User::all()->except(auth()->id());
 
-        return view('admin.dashboard',compact('users'));
+        $users = User::all();
+        $usersMeta = UserMeta::all();
+        // count for charts
+        $total = $users->count();
+        $female = $usersMeta->where('gender',1)->count();
+        $male = $usersMeta->where('gender',0)->count();
+        $avgYear = $usersMeta->avg('year');
+        
+        return view('admin.index',compact('total','female','male','avgYear'));
     }
 
     /**

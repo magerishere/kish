@@ -60,4 +60,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(UserMeta::class);
     }
+
+
+    
 }

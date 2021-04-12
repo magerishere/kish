@@ -6,7 +6,7 @@ use App\Http\Controllers\UserService\Update;
 use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -98,6 +98,15 @@ class UserController extends Controller
             return redirect()
                 ->route('guest.login')
                 ->with('success','you successfuly logout');
+    }
+
+    public function notification()
+    {
+        $notifications = DB::table('notifications')
+                            ->where('notifiable_id',auth()->user()->id)
+                            ->get();
+
+        return view('users.notification',compact('notifications'));
     }
 
 }

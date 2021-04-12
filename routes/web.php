@@ -6,8 +6,13 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\DemoController;
+use App\Models\User;
+use App\Notifications\UserNotification;
+use Facade\Ignition\Exceptions\ViewExceptionWithSolution;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -54,6 +59,9 @@ use Illuminate\Support\Facades\Route;
         Route::get('/users-list',[AdminController::class,'usersList'])->name('admin.usersList');
         Route::get('/user-list/{id}',[AdminController::class,'userList'])->name('admin.userList');
     });
+    Route::middleware('auth')->group(function () {
+        Route::get('/notification',[UserController::class,'notification'])->name('user.notification');
+    });
     Route::middleware('guest')->group(function () {
         Route::get('/register',function(){
             return view('guest.register');
@@ -64,6 +72,7 @@ use Illuminate\Support\Facades\Route;
         })->name('guest.login');
 
     });
+
 
 
 
@@ -101,3 +110,7 @@ use Illuminate\Support\Facades\Route;
     Route::get('registrations/export_mapping', [DemoController::class, 'export_mapping'])->name('registrations.export_mapping') ;
     Route::get('importExportView', [DemoController::class,'importExportView']);
     Route::post('import', [DemoController::class,'import'])->name('import');
+
+
+
+

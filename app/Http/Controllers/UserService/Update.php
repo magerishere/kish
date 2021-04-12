@@ -6,6 +6,7 @@ use App\Jobs\UpdateProfileEmailJob;
 use App\Mail\ChangeUserProfileMail;
 use App\Models\Image;
 use App\Models\UserMeta;
+use App\Notifications\UserNotification;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
@@ -51,10 +52,10 @@ class Update {
 
             // dispatch(new UpdateProfileEmailJob($user->email,$values));
 
-            Mail::to($user->email)->send(new ChangeUserProfileMail($values));
-
-
-
+            // Mail::to($user->email)->send(new ChangeUserProfileMail($values));
+            $subject = 'User Notification';
+            $message = 'at your profile changed by ' . $user->email;
+            $user->notify(new UserNotification($subject,$values,$message));
             $user->meta->save();
 
          } else {
