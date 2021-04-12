@@ -33,6 +33,7 @@
             <a href="{{ route('guest.login') }}" class="btn btn-primary">Login</a>
             <a href="{{ route('guest.register') }}" class="btn btn-info">Register</a>
         @else
+        <a href="{{ route('ticket.index') }}" class="btn btn-secondary">Tickets</a>
         <a href="{{ route('user.notification') }}" class="btn btn-light">Notification</a>
         <a href="{{ route('admin.index') }}" class="btn btn-dark">Chart Users</a>
         <a href="{{ route('permission.index') }}" class="btn btn-warning">Permissions</a>

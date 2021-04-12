@@ -24,4 +24,6 @@ class Image extends Model
     {
         return $this->attributes['url'] = "/storage/images/" . $url;
     }
+
+    
 }

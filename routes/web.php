@@ -6,13 +6,9 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\DemoController;
-use App\Models\User;
-use App\Notifications\UserNotification;
-use Facade\Ignition\Exceptions\ViewExceptionWithSolution;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Http\Controllers\TicketController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,6 +22,7 @@ use Illuminate\Support\Facades\Route;
     Route::resource('role',RoleController::class)->middleware(['auth','admin']);
     Route::resource('permission', PermissionController::class)->middleware(['auth','admin']);
     Route::resource('guest',GuestController::class)->middleware('guest');
+    Route::resource('ticket', TicketController::class)->middleware('auth');
 /*
 |--------------------------------------------------------------------------
 | Post Routes
@@ -38,6 +35,7 @@ use Illuminate\Support\Facades\Route;
 
     Route::middleware('auth')->group(function () {
         Route::post('/logout',[UserController::class,'logout'])->name('user.logout');
+        Route::post('/ticket-child',[TicketController::class,'childTicket'])->name('ticket.child');
     });
 
     Route::middleware('guest')->group(function () {
@@ -58,6 +56,8 @@ use Illuminate\Support\Facades\Route;
     Route::middleware(['auth','admin'])->group(function () {
         Route::get('/users-list',[AdminController::class,'usersList'])->name('admin.usersList');
         Route::get('/user-list/{id}',[AdminController::class,'userList'])->name('admin.userList');
+        Route::get('/ticket/{id}/close',[TicketController::class,'closeTicket'])->name('ticket.close');
+        Route::get('/ticket/{id}/open',[TicketController::class,'openTicket'])->name('ticket.open');
     });
     Route::middleware('auth')->group(function () {
         Route::get('/notification',[UserController::class,'notification'])->name('user.notification');
@@ -84,6 +84,12 @@ use Illuminate\Support\Facades\Route;
 */
 
     Route::get('/email/verify', function () {
+
+        $user = auth()->user();
+        if($user->hasVerifiedEmail())
+        {
+            return view('users.dashboard',compact('user'));
+        }
         return view('auth.verify-email');
     })->middleware('auth')->name('verification.notice');
 
