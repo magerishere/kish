@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -23,6 +24,7 @@ use Illuminate\Support\Facades\Route;
     Route::resource('permission', PermissionController::class)->middleware(['auth','admin']);
     Route::resource('guest',GuestController::class)->middleware('guest');
     Route::resource('ticket', TicketController::class)->middleware('auth');
+    Route::resource('chat', ChatController::class)->middleware('auth');
 /*
 |--------------------------------------------------------------------------
 | Post Routes

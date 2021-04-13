@@ -61,6 +61,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(UserMeta::class);
     }
 
+    public function chats()
+    {
+        return $this->hasMany(Chat::class,'from');
+    }
 
-    
+
 }

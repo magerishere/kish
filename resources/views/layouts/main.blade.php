@@ -42,6 +42,7 @@
             <a href="{{ route('guest.login') }}" class="btn btn-primary">Login</a>
             <a href="{{ route('guest.register') }}" class="btn btn-info">Register</a>
         @else
+        <a href="{{ route('chat.index') }}" class="btn btn-primary">Chat</a>
         <a href="{{ route('ticket.index') }}" class="btn btn-secondary">Tickets</a>
         <a href="{{ route('user.notification') }}" class="btn btn-light">Notification
         <span>{{ $countNotifications }}</span>

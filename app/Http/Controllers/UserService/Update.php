@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers\UserService;
 
-use App\Jobs\UpdateProfileEmailJob;
-use App\Mail\ChangeUserProfileMail;
 use App\Models\Image;
 use App\Models\UserMeta;
 use App\Notifications\UserNotification;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Storage;
+
 use Throwable;
 
 class Update {
