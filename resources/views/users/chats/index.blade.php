@@ -25,7 +25,11 @@
                       <div class="chat_people">
                           <div class="chat_img"> <img src="{{ $user->image ? $user->image->url : '/storage/images/avatar.png' }}" alt="sunil"> </div>
                           <div class="chat_ib">
-                              <h5>{{ $user->meta ? $user->meta->name : $user->email }} <span class="chat_date">{{ $user->chats->last() ?  $user->chats->last()->created_at : ''  }}</span></h5>
+                              <h5>{{ $user->meta ? $user->meta->name : $user->email }} <span class="chat_date">
+
+                                  {{ $user->chats->last() ? \Morilog\Jalali\Jalalian::forge($user->chats->last()->created_at)->format('%A, %d %B')  : ''  }}
+                                </span>
+                            </h5>
                               <p>{{$user->chats->last() ? $user->chats->last()->message : ''}}</p>
                                 </div>
                             </div>
@@ -52,6 +56,12 @@
             $(document).ready(function() {
                 $('.chat_list:first-child').click();
 
+            });
+            $(document).keypress(function(event){
+                var keycode = (event.keyCode ? event.keyCode : event.which);
+                if(keycode == '13' && document.getElementById('messageInput') && document.getElementById('messageInput').value){
+                    document.getElementById('messageButton').click();
+                }
             });
 
             let pvUser;
@@ -83,13 +93,17 @@
                     success:function(res) {
                         let form;
                         res.chats.map(chat => {
+                            let date = new Date(chat.created_at);
+                            let hours = date.getHours();
+                            let minutes = date.getMinutes();
+                            let seconds = date.getSeconds();
                             if(chat.from == id) {
                                 form += ` <div class="incoming_msg">
                   <div class="incoming_msg_img"> <img src="${res.userImage != '' ? res.userImage : '/storage/images/avatar.png'}" alt="sunil"> </div>
                   <div class="received_msg">
                     <div class="received_withd_msg">
                       <p>${chat.message}</p>
-                      <span class="time_date"> ${chat.created_at} </span></div>
+                      <span class="time_date"> ${hours + ':' + minutes + ':' + seconds} </span></div>
                   </div>
                 </div>`
                             } else {
@@ -97,7 +111,7 @@
                                     <div class="outgoing_msg_img"> <img src="${res.authImage != '' ? res.authImage : '/storage/images/avatar.png'}" alt="sunil"> </div>
                   <div class="sent_msg">
                     <p>${chat.message}</p>
-                    <span class="time_date"> ${chat.created_at}</span> </div>
+                    <span class="time_date"> ${hours + ':' + minutes + ':' + seconds}</span> </div>
                 </div>`
                             }
 

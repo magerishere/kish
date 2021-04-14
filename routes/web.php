@@ -10,8 +10,17 @@ use App\Http\Controllers\DemoController;
 use App\Http\Controllers\TicketController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
+
+
+
+
+    Route::get('/',function(){
+        App::setLocale('fa');
+        return view('index');
+    });
 /*
 |--------------------------------------------------------------------------
 | Resource Routes

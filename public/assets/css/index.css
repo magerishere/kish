@@ -1,0 +1,312 @@
+@font-face {
+    font-family: Vazir;
+    src: url('../fonts/vazir/Vazir-Regular-UI.eot');
+    src: url('../fonts/vazir/Vazir-Regular-UI.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/vazir/Vazir-Regular-UI.woff2') format('woff2'),
+         url('../fonts/vazir/Vazir-Regular-UI.woff') format('woff'),
+         url('../fonts/vazir/Vazir-Regular-UI.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: Vazir;
+    src: url('../fonts/vazir/Vazir-Bold-UI.eot');
+    src: url('../fonts/vazir/Vazir-Bold-UI.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/vazir/Vazir-Bold-UI.woff2') format('woff2'),
+         url('../fonts/vazir/Vazir-Bold-UI.woff') format('woff'),
+         url('../fonts/vazir/Vazir-Bold-UI.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+@font-face {
+    font-family: Vazir;
+    src: url('../fonts/vazir/Vazir-Black-UI.eot');
+    src: url('../fonts/vazir/Vazir-Black-UI.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/vazir/Vazir-Black-UI.woff2') format('woff2'),
+         url('../fonts/vazir/Vazir-Black-UI.woff') format('woff'),
+         url('../fonts/vazir/Vazir-Black-UI.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+@font-face {
+    font-family: Vazir;
+    src: url('../fonts/vazir/Vazir-Medium-UI.eot');
+    src: url('../fonts/vazir/Vazir-Medium-UI.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/vazir/Vazir-Medium-UI.woff2') format('woff2'),
+         url('../fonts/vazir/Vazir-Medium-UI.woff') format('woff'),
+         url('../fonts/vazir/Vazir-Medium-UI.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: Vazir;
+
+    src: url('../fonts/vazir/Vazir-Light-UI.eot');
+    src: url('../fonts/vazir/Vazir-Light-UI.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/vazir/Vazir-Light-UI.woff2') format('woff2'),
+         url('../fonts/vazir/Vazir-Light-UI.woff') format('woff'),
+         url('../fonts/vazir/Vazir-Light-UI.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+@font-face {
+    font-family: Vazir;
+    src: url('../fonts/vazir/Vazir-Thin-UI.eot');
+    src: url('../fonts/vazir/Vazir-Thin-UI.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/vazir/Vazir-Thin-UI.woff2') format('woff2'),
+         url('../fonts/vazir/Vazir-Thin-UI.woff') format('woff'),
+         url('../fonts/vazir/Vazir-Thin-UI.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+@font-face {
+    font-family: Vazir;
+    src: url('../fonts/vazir/Vazir-Regular-FD-WOL-UI.eot');
+    src: url('../fonts/vazir/Vazir-Regular-FD-WOL-UI.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/vazir/Vazir-Regular-FD-WOL-UI.woff2') format('woff2'),
+         url('../fonts/vazir/Vazir-Regular-FD-WOL-UI.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: Vazir;
+    src: url('../fonts/vazir/Vazir-Regular-FD-WOL-UI.eot');
+    src: url('../fonts/vazir/Vazir-Regular-FD-WOL-UI.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/vazir/Vazir-Regular-FD-WOL-UI.woff2') format('woff2'),
+         url('../fonts/vazir/Vazir-Regular-FD-WOL-UI.woff') format('woff'),
+         url('../fonts/vazir/Vazir-Regular-FD-WOL-UI.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: Vazir;
+    src: url('../fonts/vazir/Vazir-Bold-FD-WOL-UI.eot');
+    src: url('../fonts/vazir/Vazir-Bold-FD-WOL-UI.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/vazir/Vazir-Bold-FD-WOL-UI.woff2') format('woff2'),
+         url('../fonts/vazir/Vazir-Bold-FD-WOL-UI.woff') format('woff'),
+         url('../fonts/vazir/Vazir-Bold-FD-WOL-UI.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Vazir;
+    src: url('../fonts/vazir/Vazir-Black-FD-WOL-UI.eot');
+    src: url('../fonts/vazir/Vazir-Black-FD-WOL-UI.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/vazir/Vazir-Black-FD-WOL-UI.woff2') format('woff2'),
+         url('../fonts/vazir/Vazir-Black-FD-WOL-UI.woff') format('woff'),
+         url('../fonts/vazir/Vazir-Black-FD-WOL-UI.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Vazir;
+    src: url('../fonts/vazir/Vazir-Medium-FD-WOL-UI.eot');
+    src: url('../fonts/vazir/Vazir-Medium-FD-WOL-UI.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/vazir/Vazir-Medium-FD-WOL-UI.woff2') format('woff2'),
+         url('../fonts/vazir/Vazir-Medium-FD-WOL-UI.woff') format('woff'),
+         url('../fonts/vazir/Vazir-Medium-FD-WOL-UI.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: Vazir;
+
+    src: url('../fonts/vazir/Vazir-Light-FD-WOL-UI.eot');
+    src: url('../fonts/vazir/Vazir-Light-FD-WOL-UI.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/vazir/Vazir-Light-FD-WOL-UI.woff2') format('woff2'),
+         url('../fonts/vazir/Vazir-Light-FD-WOL-UI.woff') format('woff'),
+         url('../fonts/vazir/Vazir-Light-FD-WOL-UI.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+@font-face {
+    font-family: Vazir;
+    src: url('../fonts/vazir/Vazir-Thin-FD-WOL-UI.eot');
+    src: url('../fonts/vazir/Vazir-Thin-FD-WOL-UI.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/vazir/Vazir-Thin-FD-WOL-UI.woff2') format('woff2'),
+         url('../fonts/vazir/Vazir-Thin-FD-WOL-UI.woff') format('woff'),
+         url('../fonts/vazir/Vazir-Thin-FD-WOL-UI.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+
+
+body {
+    font-family: Vazir,Verdana, Geneva, Tahoma, sans-serif;
+    direction: rtl;
+    overflow-y: scroll;
+overflow-x: hidden;
+}
+
+
+nav li a {
+    color:black;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+
+.btn-primary {
+    color: white;
+    background-color: #0f1b4c;
+    padding: 12px;
+    border-radius: 15%;
+    border: none;
+    width: max-content;
+}
+
+
+.main-title {
+    text-align: center;
+    margin-top: 100px;
+    color: #0f1b4c;
+    font-weight: bold;
+
+}
+
+.main-details {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.main-details p {
+    color: gray;
+}
+
+.main-details a {
+    margin: 15px 400px 0 0;
+}
+
+.card {
+    width: 350px;
+    border-radius: 10%;
+    box-shadow: 0 10px 10px 10px rgb(0, 0, 0,0.2);
+}
+.card:first-child {
+    margin-right: 20px;
+}
+.card .card-img-top {
+    margin: 80px auto;
+    width: 110px;
+    height: 150px;
+}
+.card .card-title {
+    margin-top: -50px;
+    text-align: center;
+    font-size: 30px;
+    color: #0f1b4c;
+    font-weight: bold;
+}
+
+.card .card-text {
+    color: gray;
+    padding: 16px;
+}
+
+.card a {
+    position: absolute;
+    margin-right: 30%;
+    padding: 15px 20px 15px 20px;
+    font-weight: bold;
+
+}
+
+@media only screen and (max-width: 600px) {
+    .card {
+        margin-bottom: 20px;
+    }
+    .card a {
+        position: relative;
+    }
+    .container img {
+        width: 400px;
+    }
+    .btn-primary {
+        margin-right: -50px;
+    }
+
+  }
+
+.card-background {
+    z-index: -1;
+    position: absolute;
+    margin-top: 200px;
+    max-width: 100%;
+    height: 500px;
+    background-color: rgb(127, 224, 236);
+    background-image: linear-gradient(rgb(81, 81, 219),rgb(128, 164, 243));
+}
+
+nav .navlink:hover {
+    color: blue;
+}
+
+.our-features {
+    margin-top: 300px;
+}
+
+
+.our-features img {
+    margin-right: 40px;
+}
+.our-features h1 {
+    color: white;
+}
+.our-features p {
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+
+.footer-communication h2 {
+    margin-bottom: 30px;
+}
+
+.footer-communication span {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.footer-communication p {
+    font-weight: bold;
+}
+
+.footer-communication form {
+    margin: 50px 140px 0 0;
+}
+
+.footer-communication form span {
+    border: 1px solid black;
+    border-top-left-radius: 10%;
+    font-weight: bold;
+    background-color: white;
+    box-shadow: 0 2px 2px 2px rgb(0, 0, 0,0.2);
+}
+.footer-communication button {
+    border: none;
+}
+.footer-communication form span:hover {
+    background-color: rgb(236, 236, 129);
+}
+.footer-communication form span:hover button {
+    background-color: rgb(236, 236, 129);
+}
+.footer-communication form input {
+    border: none;
+    background-color: #0f1b4c;
+    text-align: left;
+    color: white;
+    box-shadow: 0 2px 2px 2px rgb(0, 0, 0,0.2);
+    padding-left: 20px;
+
+}
+
+.footer-communication i {
+    color: rgb(128, 164, 243);
+}
+::placeholder {
+    color: gray;
+}
