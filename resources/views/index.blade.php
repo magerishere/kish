@@ -1,45 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.main')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/index.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/fontawesome.css') }}">
-    <title>Document</title>
-</head>
 
-<body>
-    <div class="container">
-        <nav class="navbar navbar-expand-sm navbar-light">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="myNav">
+@section('header')
+<link rel="stylesheet" href="{{ asset('assets/css/index.css') }}">
+    
+@endsection
+@section('content')
 
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">{{ __('pages/index.main-page') }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">{{ __('pages/index.articles') }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">{{ __('pages/index.apartments') }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">{{ __('pages/index.contact-us') }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">{{ __('pages/index.about-us') }}</a>
-                    </li>
-                </ul>
-            </div>
-            <a href="#" class="btn btn-primary">{{ __('pages/index.login-register') }}</a>
-        </nav>
-    </div>
 
     <div class="container">
         <div class="row">
@@ -253,10 +220,16 @@
     </div>
 
 
+@endsection
 
-    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
-    <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('assets/js/popper.min.js') }}"></script>
+
+@section('footer')
+
+
+<script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+<script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/js/popper.min.js') }}"></script>
 </body>
 
 </html>
+@endsection

@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 
     Route::get('/',function(){
-        App::setLocale('fa');
+        // App::setLocale('fa');
         return view('index');
     });
 /*
