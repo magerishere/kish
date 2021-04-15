@@ -7,6 +7,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\DemoController;
+use App\Http\Controllers\SmsController;
 use App\Http\Controllers\TicketController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -21,6 +22,16 @@ use Illuminate\Support\Facades\Route;
         // App::setLocale('fa');
         return view('index');
     });
+
+
+
+    Route::get('/sms',function() {
+        return view('sms');
+    });
+
+
+    // Route::get('/send-sms', [SmsController::class,'sendMessage'])->name('sendSms');
+    Route::post('/sms', [SmsController::class,'trySendMessage'])->name('sendSms');
 /*
 |--------------------------------------------------------------------------
 | Resource Routes

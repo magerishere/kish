@@ -23,6 +23,9 @@
 
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
+                        <a href='{{ url("/sms/post/ws.sms.ir/") }}' class="nav-link"></a>
+                    </li>
+                    <li class="nav-item">
                         <a href="#" class="nav-link">{{ __('pages/index.main-page') }}</a>
                     </li>
                     <li class="nav-item">
