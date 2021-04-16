@@ -16,6 +16,7 @@ namespace App\Http\Controllers;
  * @link      https://sms.ir/ Documentation of sms.ir Restful API PHP Sample Codes.
  */
 
+use App\Jobs\SendSmsVerificationJob;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -197,14 +198,8 @@ class SmsController extends Controller
 
     public function trySendMessage(Request $request)
     {
-
-        // try {
-                if(DB::select('select * from verification_code where phone_number = ?', array($request->phone_number)))
-                {
-                    return response()->json(['has_number'=>1]);
-
-                } else {
-
+        try {
+              
 
                 date_default_timezone_set("Asia/Tehran");
 
@@ -219,9 +214,14 @@ class SmsController extends Controller
                 // sending date
                 @$SendDateTime = date("Y-m-d")."T".date("H:i:s");
 
-                $SmsIR_SendMessage = new SmsController();
-                $SendMessage = $SmsIR_SendMessage->sendMessage($MobileNumbers, $Messages, $SendDateTime);
+          
 
+                dispatch(new SendSmsVerificationJob($MobileNumbers,$Messages,$SendDateTime));
+                if(DB::select('select * from verification_code where phone_number = ?', array($request->phone_number)))
+                {
+                    return response()->json(['has_number'=>1]);
+
+                } else {
                     DB::table('verification_code')->insert([
                         'phone_number' => $MobileNumbers[0],
                         'code' => $code,
@@ -229,13 +229,12 @@ class SmsController extends Controller
                         'updated_at' => Carbon::now(),
                     ]);
 
-                var_dump($SendMessage);
-
+                    return response()->json(['has_number'=>0]);
                 }
 
-            // } catch (Exeption $e) {
-                // echo 'Error SendMessage : '.$e->getMessage();
-            // }
+            } catch (Exeption $e) {
+                echo 'Error SendMessage : '.$e->getMessage();
+            }
 
 
     }
