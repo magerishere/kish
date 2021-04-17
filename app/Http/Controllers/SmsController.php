@@ -17,6 +17,8 @@ namespace App\Http\Controllers;
  */
 
 use App\Jobs\SendSmsVerificationJob;
+use App\Models\User;
+use App\Models\VerificationCode;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -198,9 +200,11 @@ class SmsController extends Controller
 
     public function trySendMessage(Request $request)
     {
+       $validated = $request->validate([
+            'phone_number' => 'required|regex:/(09)[0-9]{9}/|min:11|max:11',
+        ]);
+        if(!$validated) return response()->json(['has_number'=>-1]);
         try {
-              
-
                 date_default_timezone_set("Asia/Tehran");
 
                 // your mobile numbers
@@ -214,22 +218,28 @@ class SmsController extends Controller
                 // sending date
                 @$SendDateTime = date("Y-m-d")."T".date("H:i:s");
 
-          
 
                 dispatch(new SendSmsVerificationJob($MobileNumbers,$Messages,$SendDateTime));
-                if(DB::select('select * from verification_code where phone_number = ?', array($request->phone_number)))
+                if($user = User::where('phone_number',$request->phone_number)->first())
                 {
-                    return response()->json(['has_number'=>1]);
+                    VerificationCode::where('phone_number',$MobileNumbers[0])->first()->update([
+                        'code' => $code,
+                    ]);
+                    return response()->json(['has_number'=>1]); // user registered ago
+                } else if(!$user && VerificationCode::where('phone_number',$MobileNumbers[0])->first())
+                {
+                        VerificationCode::where('phone_number',$MobileNumbers)->first()->update([
+                            'code' => $code,
+                        ]);
+                    return response()->json(['has_number'=>0]);
 
                 } else {
-                    DB::table('verification_code')->insert([
-                        'phone_number' => $MobileNumbers[0],
-                        'code' => $code,
-                        'created_at' => Carbon::now(),
-                        'updated_at' => Carbon::now(),
-                    ]);
 
-                    return response()->json(['has_number'=>0]);
+                    VerificationCode::create([
+                        'phone_number' => $request->phone_number,
+                        'code' => $code,
+                    ]);
+                    return response()->json(['has_number'=>0,'create'=>'create']);
                 }
 
             } catch (Exeption $e) {

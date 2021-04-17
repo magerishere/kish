@@ -24,8 +24,8 @@ class GuestRegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|confirmed',
+            'phone_number' => 'required|min:11|max:11',
+            'verification_code' => 'required|min:6|max:6',
         ];
     }
 }

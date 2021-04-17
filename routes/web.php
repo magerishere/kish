@@ -9,14 +9,17 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\DemoController;
 use App\Http\Controllers\SmsController;
 use App\Http\Controllers\TicketController;
+use App\Models\VerificationCode;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 
     Route::get('/',function(){
-       
+
         App::setLocale('fa');
         return view('index');
     });

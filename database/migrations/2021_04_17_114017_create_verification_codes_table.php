@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVerificationCodeTable extends Migration
+class CreateVerificationCodesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateVerificationCodeTable extends Migration
      */
     public function up()
     {
-        Schema::create('verification_code', function (Blueprint $table) {
+        Schema::create('verification_codes', function (Blueprint $table) {
             $table->mediumIncrements('id');
             $table->string('phone_number',11)->unique();
             $table->mediumInteger('code');
@@ -28,6 +28,6 @@ class CreateVerificationCodeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('verification_code');
+        Schema::dropIfExists('verification_codes');
     }
 }

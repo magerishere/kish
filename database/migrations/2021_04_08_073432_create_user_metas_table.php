@@ -16,9 +16,8 @@ class CreateUserMetasTable extends Migration
         Schema::create('user_metas', function (Blueprint $table) {
             $table->mediumIncrements('id');
             $table->mediumInteger('user_id');
-            $table->string('name',40)->nullable();
+            $table->string('name',40);
             $table->boolean('gender')->nullable();
-            $table->string('phone_number',11)->nullable();
             $table->text('address')->nullable();
             $table->tinyInteger('year')->nullable();
             $table->timestamps();
