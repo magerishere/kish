@@ -55,6 +55,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        $user = auth()->user();
         $genders = ['Male','Female'];
         return view('users.show',compact('user','genders'));
     }
@@ -67,6 +68,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        $user = auth()->user();
+
         return view('users.edit',compact('user'));
     }
 

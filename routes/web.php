@@ -9,14 +9,35 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\DemoController;
 use App\Http\Controllers\SmsController;
 use App\Http\Controllers\TicketController;
+use App\Models\User;
 use App\Models\VerificationCode;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
+
+
+
+
+
+Route::get('/test',function() {
+    return view('test');
+});
+Route::post('/test',function(Request $request) {
+    // $user = User::find(2);
+    // echo $user->password . '<br>';
+    // echo bcrypt($request->password) . '<br>';
+    if(Auth::attempt(['email' => $request->email, 'password' => $request->password]))
+    {
+        $request->session()->regenerate();
+        return redirect('/user');
+    }
+    return 'wrong';
+})->name('test');
 
     Route::get('/',function(){
 
@@ -39,7 +60,7 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-    Route::resource('user',UserController::class)->middleware(['auth','verified']);
+    Route::resource('user',UserController::class)->middleware(['auth']);
     Route::resource('admin', AdminController::class)->middleware(['auth','admin']);
     Route::resource('role',RoleController::class)->middleware(['auth','admin']);
     Route::resource('permission', PermissionController::class)->middleware(['auth','admin']);

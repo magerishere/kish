@@ -24,7 +24,8 @@ class trySendMessageRequest extends FormRequest
     public function rules()
     {
         return [
-            'phone_number' => 'required|bail|regex:/(09)[0-9]{9}/|digits:11',
+            'email' => 'sometimes|required|email',
+            'phone_number' => 'sometimes|required|bail|regex:/(09)[0-9]{9}/|digits:11',
             'verification_code' => 'sometimes|required|bail|integer|digits:6',
 
         ];

@@ -23,6 +23,7 @@ use App\Models\VerificationCode;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -208,7 +209,12 @@ class SmsController extends Controller
         if($validator->fails()) {
             return response()->json($validator->messages(), Response::HTTP_BAD_REQUEST);
         }
+
         try {
+                if($request->has('email'))
+                {
+                    return response()->json(['has_email'=>1]);
+                }
                 date_default_timezone_set("Asia/Tehran");
 
                 // your mobile numbers

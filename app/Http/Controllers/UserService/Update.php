@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\UserService;
 
 use App\Models\Image;
+use App\Models\User;
 use App\Notifications\UserNotification;
-
+use Illuminate\Support\Facades\Auth;
 use Throwable;
 
 class Update {
@@ -13,6 +14,22 @@ class Update {
     {
 
         try{
+            if($request->password)
+            {
+                $userId = Auth::id();
+                $user = User::find($userId);
+                $user->update([
+                    'password' => bcrypt($request->password),
+                ]);
+                auth()->logout();
+                $request->session()->invalidate();
+
+                $request->session()->regenerateToken();
+
+                return redirect('/')
+                    ->back()
+                    ->withSuccess('Your password is changed');
+            }
             // Image update handler
             if($file = $request->file('image'))
             {
@@ -51,13 +68,7 @@ class Update {
                $user->meta->save();
 
 
-            if($request->password)
-            {
-                $user = auth()->user();
-                $user->update([
-                    'password' => bcrypt($request->input('password')),
-                ]);
-            }
+
 
         } catch(Throwable $e) {
             return back()

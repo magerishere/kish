@@ -21,7 +21,7 @@ return [
         ],
         'phone_number' => [
             'regex' => ':attribute باید به صورت 09********* باشد',
-        ]
+        ],
     ],
 
     'attributes' => [

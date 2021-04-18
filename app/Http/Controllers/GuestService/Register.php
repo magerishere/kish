@@ -12,6 +12,7 @@ class Register {
     public function __invoke($request)
     {
         try{
+
             $phone = VerificationCode::where('phone_number',$request->phone_number)->first();
             if($phone->code == $request->verification_code)
             {
