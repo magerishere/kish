@@ -28,7 +28,7 @@ class Register {
             }
 
         } catch(Throwable $e) {
-            return response()->json(['status'=>400]);
+            return response()->json(['verification_code_is_wrong'=>400]);
 
         }
     }

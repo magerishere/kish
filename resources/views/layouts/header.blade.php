@@ -1,3 +1,13 @@
+@auth
+@php
+
+    $countNotifications = \Illuminate\Support\Facades\DB::table('notifications')
+    ->where('notifiable_id',auth()->user()->id)
+    ->whereNull('read_at')
+    ->count()
+
+@endphp
+@endauth
 <!DOCTYPE html>
 <html lang="en">
 
@@ -45,16 +55,18 @@
         @guest
             <a href="{{ route('guest.login') }}" class="btn btn-primary">{{ __('pages/index.login-register') }}</a>
         @else
+        @role('admin')
+            <a href="{{ route('admin.index') }}" class="btn btn-dark">Chart Users</a>
+            <a href="{{ route('permission.index') }}" class="btn btn-warning">Permissions</a>
+            <a href="{{ route('role.index') }}" class="btn btn-info">Roles</a>
+            <a href="{{ route('admin.usersList') }}" class="btn btn-success">Users list</a>
+        @endrole
+        <a href="{{ route('user.edit',auth()->user()->id) }}" class="btn btn-info">Setting</a>
         <a href="{{ route('chat.index') }}" class="btn btn-primary">Chat</a>
         <a href="{{ route('ticket.index') }}" class="btn btn-secondary">Tickets</a>
         <a href="{{ route('user.notification') }}" class="btn btn-light">Notification
-        {{-- <span>{{ $countNotifications }}</span> --}}
+        <span>{{ $countNotifications }}</span>
         </a>
-        <a href="{{ route('admin.index') }}" class="btn btn-dark">Chart Users</a>
-        <a href="{{ route('permission.index') }}" class="btn btn-warning">Permissions</a>
-        <a href="{{ route('role.index') }}" class="btn btn-info">Roles</a>
-        <a href="{{ route('admin.usersList') }}" class="btn btn-success">Users list</a>
-
         <form action="{{ route('user.logout') }}" method="POST" class="d-flex">
             @csrf
 

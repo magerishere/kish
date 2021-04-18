@@ -1,77 +1,4 @@
-@extends('layouts.main')
-
-@section('header')
-    <link rel="stylesheet" href="{{ asset('assets/css/login.css') }}">
-@endsection
-
-@section('content')
-
-  <div class="container">
-      <div class="row">
-          <div class="col-md-6">
-
-                <img class="background-login" src="{{ asset('assets/images/background-login.jpg') }}" alt="">
-
-
-            <div class="card">
-                <div class="row">
-                    <div class="col-md-1"></div>
-                    <div class="col-md-3">
-                        <a href="#"><h5>شرکتی</h5></a>
-                    </div>
-                    <div class="col-md-3">
-                        <a href="#"><h5>اصناف</h5></a>
-                    </div>
-                    <div class="col-md-3">
-                        <a href="#"><h5>شخصی</h5></a>
-                    </div>
-                </div>
-                <br>
-                <br>
-                <br>
-
-                <div class="card-body">
-                    <h4 class="card-title">کار کیش چه کمکی بهت میکنه؟</h4>
-                    <p class="card-text"><img src="{{ asset('assets/images/checked.jfif') }}" alt=""> همین حالا در کار ثبت نام کن</p>
-                    <p class="card-text"><img src="{{ asset('assets/images/checked.jfif') }}" alt=""> رزومه ات رو برای آگهی های استخدام شرکتهای معتبر بفرست</p>
-                    <p class="card-text"><img src="{{ asset('assets/images/checked.jfif') }}" alt=""> جستجوی در آگهی های استخدام +3000 شرکت معتبر و ارساله رزومه با یک کلیک</p>
-                    <p class="card-text"><img src="{{ asset('assets/images/checked.jfif') }}" alt=""> رزومه ساز استاندارد</p>
-                    <p class="card-text"><img src="{{ asset('assets/images/checked.jfif') }}" alt=""> شناخت محیط کار و فرهنگ سازمانی شرکت های در حال استخدام</p>
-                    <p class="card-text"><img src="{{ asset('assets/images/checked.jfif') }}" alt=""> دریافت فرصت های شغلی جدید مرتبط از طریق ایمیل</p>
-                    <p class="card-text"><img src="{{ asset('assets/images/checked.jfif') }}" alt=""> نوع فعالیت شرکت</p>
-                </div>
-            </div>
-          </div>
-          <div class="col-md-1"></div>
-          <div class="col-md-5" id="changeForm">
-                <h1 class="text-center">وارد شوید</h1>
-                <br>
-                <form id="form-login" action="{{ route('sendSms') }}" method="POST">
-                    <div class="mb-3">
-                        <label for="phone_number">شماره موبایل خود را وارد کنید</label>
-                    </div>
-                    <div class="mb-3">
-                        <input type="text" name="phone_number" id="phone_number" class="form-control"  placeholder="*********09" required>
-                    </div>
-                    <div id="code" class="mb-3"></div>
-
-                    <div class="text-center">
-                        <button type="button" onclick="send_verification_code_handler()" id="loginBtn" class="mx-auto">ورود</button>
-                        <p id="wrongCode" class="text-danger"></p>
-                        <p id="time"></p>
-
-                    </div>
-                </form>
-          </div>
-      </div>
-  </div>
-
-@endsection
-
-
-@section('footer')
-    <script>
-        let phone_number,twoMinutes,timerHandler,formData,editPhoneNumber,errorMessage;
+   let phone_number,twoMinutes,timerHandler,formData,editPhoneNumber;
         const login_form = `<label for="verification_code">کد تایید</label>
                     <input type="text"
                     name="verification_code"
@@ -125,13 +52,11 @@
                 </form>`;
         }
         const send_verification_code_handler = () => {
-            errorMessage            = document.getElementById('wrongCode');
-            errorMessage.innerHTML  = '';
-            phone_number            = document.getElementById('phone_number');
-            const code              = document.getElementById('code');
-            const change_form       = document.getElementById('changeForm');
-            const loginBtn          = document.getElementById('loginBtn');
-
+            phone_number = document.getElementById('phone_number');
+            const code = document.getElementById('code');
+            const change_form = document.getElementById('changeForm');
+            const loginBtn = document.getElementById('loginBtn');
+            console.log(phone_number.value);
 
             $.ajax({
                 type: 'post',
@@ -142,6 +67,7 @@
 
                     if(res.has_number == 1) {
                     code.innerHTML = login_form;
+                    loginBtn.setAttribute('type','button');
                     loginBtn.onclick = function() {loginHandler()};
                     phone_number.disabled = true;
 
@@ -154,10 +80,15 @@
                     display = document.querySelector('#time');
                     startTimer(twoMinutes, display);
                 },error:function(err) {
-                    if(err.responseJSON.errors)
-                    {
-                        if(err.responseJSON.errors.phone_number) errorMessage.innerHTML += err.responseJSON.errors.phone_number + '<br>';
-                    }
+                    if(err.status == 422)
+                {
+                      document.getElementById('wrongCode').innerHTML = 'شماره موبایل معتبر وارد کنید';
+                } else {
+
+                    document.getElementById('wrongCode').innerHTML = 'خطا! دوباره تلاش کنید';
+
+                }
+
                 },
             });
         }
@@ -223,8 +154,15 @@
  const registerHandler = () => {
     errorMessage = document.getElementById('wrongCode');
     errorMessage.innerHTML = '';
-    const name = document.getElementById('name');
-    const name_is_persian = /^[\u0600-\u06FF\s]+$/;
+    if(document.getElementById('name').value == 0) {
+        errorMessage.innerHTML = 'اسم خودرا وارد کنید';
+
+    } else if (document.getElementById('phone_number').value == 0) {
+        errorMessage.innerHTML = 'شماره موبایل خود را وارد کنید';
+    } else if (document.getElementById('verification_code').value == 0) {
+        errorMessage.innerHTML = 'کد تایید را وارد کنید';
+
+    } else {
 
     formData =   $('#form-register').serializeArray();
     phone_number = document.getElementById('phone_number').value;
@@ -244,28 +182,29 @@
             }
 
         },error:function(err) {
-            if(!name_is_persian.test(name.value))
-            {
-                errorMessage.innerHTML += 'اسم خود را به صورت حروف فارسی وارد کنید' + '<br>';
-            }
+            console.log(err);
             if(err.responseJSON.errors)
             {
-                if(err.responseJSON.errors.name)                errorMessage.innerHTML += err.responseJSON.errors.name + '<br>';
-                if(err.responseJSON.errors.gender)              errorMessage.innerHTML +=  err.responseJSON.errors.gender + '<br>';
-                if(err.responseJSON.errors.email)               errorMessage.innerHTML += err.responseJSON.errors.email + '<br>';
-                if(err.responseJSON.errors.phone_number)        errorMessage.innerHTML += err.responseJSON.errors.phone_number + '<br>';
-                if(err.responseJSON.errors.verification_code)   errorMessage.innerHTML += err.responseJSON.errors.verification_code + '<br>';
+                if(err.responseJSON.errors.name)                errorMessage.innerHTML += err.responseJSON.errors.name[0] + '<br>';
+                if(err.responseJSON.errors.gender)              errorMessage.innerHTML +=  err.responseJSON.errors.gender[0] + '<br>';
+                if(err.responseJSON.errors.email)               errorMessage.innerHTML += err.responseJSON.errors.email[0] + '<br>';
+                if(err.responseJSON.errors.phone_number)        errorMessage.innerHTML += err.responseJSON.errors.phone_number[0] + '<br>';
+                if(err.responseJSON.errors.verification_code)   errorMessage.innerHTML += err.responseJSON.errors.verification_code[0] + '<br>';
             }
 
         },
     });
-
+}
 
 
  }
 
  const loginHandler = () => {
-    errorMessage.innerHTML = '';
+
+if(document.getElementById('verification_code').value == 0 ) {
+    document.getElementById('wrongCode').innerHTML = '<p>کد تایید را وارد کنید</p>'
+} else {
+
     formData = $('#form-login').serializeArray();
     formData.push({name:'phone_number',value:phone_number.value});
     $.ajax({
@@ -273,22 +212,19 @@
         url: '/login',
         data: formData,
         success:function(res) {
-            console.log(res);
                 if(res.status == 200) {
                     window.location.href = 'http://example.test/user';
                 } else {
                     document.getElementById('wrongCode').innerHTML = 'کد تایید اشتباه است';
                 }
             },error:function(err) {
-                console.log(err);
-                if(err.responseJSON.errors)
-                {
-                    if(err.responseJSON.errors.phone_number)        errorMessage.innerHTML += err.responseJSON.errors.phone_number + '<br>';
-                    if(err.responseJSON.errors.verification_code)   errorMessage.innerHTML += err.responseJSON.errors.verification_code + '<br>';
-                }
-            }
-    });
- }
 
-    </script>
-@endsection
+                document.getElementById('wrongCode').innerHTML = 'خطا! دوباره تلاش کنید';
+
+            }
+
+    });
+}
+
+
+ }

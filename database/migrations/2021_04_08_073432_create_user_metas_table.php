@@ -17,7 +17,7 @@ class CreateUserMetasTable extends Migration
             $table->mediumIncrements('id');
             $table->mediumInteger('user_id');
             $table->string('name',40);
-            $table->boolean('gender')->nullable();
+            $table->boolean('gender');
             $table->text('address')->nullable();
             $table->tinyInteger('year')->nullable();
             $table->timestamps();

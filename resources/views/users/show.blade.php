@@ -30,11 +30,6 @@
                 </select>
             </div>
             <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Phone Number</label>
-                <input type="text" name="phone_number" class="form-control"
-                    value="{{ $user->meta ? $user->meta->phone_number : '' }}">
-            </div>
-            <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">Address</label>
                 <input type="text" name="address" class="form-control"
                     value="{{ $user->meta ? $user->meta->address : '' }}">

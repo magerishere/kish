@@ -46,7 +46,7 @@ class DeleteVerificationCodeAfterOneMinute extends Command
         $date->modify('-1 minutes');
         $formatted_date = $date->format('Y-m-d H:i:s');
 
-        $result = VerificationCode::where('created_at','<=',$formatted_date)->get();
+        $result = VerificationCode::where('updated_at','<=',$formatted_date)->get();
 
         foreach($result as $item)
         {

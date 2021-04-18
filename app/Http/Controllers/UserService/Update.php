@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\UserService;
 
 use App\Models\Image;
-use App\Models\UserMeta;
 use App\Notifications\UserNotification;
 
 use Throwable;
@@ -33,11 +32,8 @@ class Update {
 
             // User meta update handler
 
-            if($user->meta) // check if user had meta
-            {
                 $user->meta->name          = $request->input('name');
                 $user->meta->gender        = $request->input('gender');
-                $user->meta->phone_number  = $request->input('phone_number');
                 $user->meta->address       = $request->input('address');
                 $user->meta->year          = $request->input('year');
 
@@ -45,7 +41,6 @@ class Update {
                $values = [];
                if ($user->meta->isDirty('name'))           array_push($values,'name');
                if ($user->meta->isDirty('gender'))         array_push($values,'gender');
-               if ($user->meta->isDirty('phone_number'))   array_push($values,'phone_number');
                if ($user->meta->isDirty('address'))        array_push($values,'address');
                if ($user->meta->isDirty('year'))           array_push($values,'year');
 
@@ -55,9 +50,13 @@ class Update {
                $user->notify(new UserNotification($subject,$values,$message));
                $user->meta->save();
 
-            } else {
-                UserMeta::create($request->except('url'));
 
+            if($request->password)
+            {
+                $user = auth()->user();
+                $user->update([
+                    'password' => bcrypt($request->input('password')),
+                ]);
             }
 
         } catch(Throwable $e) {

@@ -16,13 +16,16 @@ namespace App\Http\Controllers;
  * @link      https://sms.ir/ Documentation of sms.ir Restful API PHP Sample Codes.
  */
 
+use App\Http\Requests\trySendMessageRequest;
 use App\Jobs\SendSmsVerificationJob;
 use App\Models\User;
 use App\Models\VerificationCode;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * ReceiveMessageByLastId Class Restful API PHP Sample Codes
@@ -198,12 +201,13 @@ class SmsController extends Controller
     }
 
 
-    public function trySendMessage(Request $request)
+    public function trySendMessage(trySendMessageRequest $request)
     {
-       $validated = $request->validate([
-            'phone_number' => 'required|regex:/(09)[0-9]{9}/|min:11|max:11',
-        ]);
-        if(!$validated) return response()->json(['has_number'=>-1]);
+       $validator = Validator::make($request->all(),[trySendMessageRequest::class]);
+
+        if($validator->fails()) {
+            return response()->json($validator->messages(), Response::HTTP_BAD_REQUEST);
+        }
         try {
                 date_default_timezone_set("Asia/Tehran");
 
@@ -218,16 +222,24 @@ class SmsController extends Controller
                 // sending date
                 @$SendDateTime = date("Y-m-d")."T".date("H:i:s");
 
-
                 dispatch(new SendSmsVerificationJob($MobileNumbers,$Messages,$SendDateTime));
+
                 if($user = User::where('phone_number',$request->phone_number)->first())
                 {
-                    VerificationCode::where('phone_number',$MobileNumbers[0])->first()->update([
-                        'code' => $code,
-                    ]);
+                   $phone_number = VerificationCode::where('phone_number',$MobileNumbers[0])->first();
+                   if($phone_number)
+                   {
+                       $phone_number->update(['code'=>$code]);
+                   } else {
+                        VerificationCode::create([
+                            'phone_number' => $request->phone_number,'code' => $code
+                        ]);
+                   }
+
                     return response()->json(['has_number'=>1]); // user registered ago
-                } else if(!$user && VerificationCode::where('phone_number',$MobileNumbers[0])->first())
-                {
+
+                } else if(!$user && VerificationCode::where('phone_number',$MobileNumbers[0])->first()) {
+
                         VerificationCode::where('phone_number',$MobileNumbers)->first()->update([
                             'code' => $code,
                         ]);
