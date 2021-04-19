@@ -114,7 +114,9 @@ Route::post('/test',function(Request $request) {
         return redirect()->back();
     })->name('setLanguage');
 
-
+    Route::get('/user',function() {
+        return view('users.setting');
+    })->name('user.setting');
 
 /*
 |--------------------------------------------------------------------------

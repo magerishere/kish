@@ -4,9 +4,8 @@
 
 
 
-{{-- <div class="container"> --}}
-    @include('layouts.messages')
-    {{-- </div>  --}}
+    {{-- @include('layouts.messages') --}}
+
     @yield('content')
 
 @include('layouts.footer')

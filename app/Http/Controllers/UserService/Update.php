@@ -50,7 +50,7 @@ class Update {
             }
 
             // User meta update handler
-
+            
                 $user->meta->name          = $request->input('name');
                 $user->meta->gender        = $request->input('gender');
                 $user->meta->address       = $request->input('address');

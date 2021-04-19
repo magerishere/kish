@@ -21,10 +21,7 @@ class UserController extends Controller
      */
     public function index()
     {
-
         $user = auth()->user();
-
-
         return view('users.dashboard',compact('user'));
     }
 
@@ -71,8 +68,8 @@ class UserController extends Controller
     public function edit()
     {
         $user = auth()->user();
-
-        return view('users.edit',compact('user'));
+        $genders = ['Male','Female'];
+        return view('users.edit',compact('user','genders'));
     }
 
     /**
