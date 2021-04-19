@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\UserService\Update;
 use App\Http\Requests\UserUpdateRequest;
+use App\Models\ApiToken;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,6 +21,7 @@ class UserController extends Controller
      */
     public function index()
     {
+
         $user = auth()->user();
 
 
@@ -53,7 +55,7 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show()
     {
         $user = auth()->user();
         $genders = ['Male','Female'];
@@ -66,7 +68,7 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit()
     {
         $user = auth()->user();
 
@@ -80,8 +82,9 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(UserUpdateRequest $request, User $user)
+    public function update(UserUpdateRequest $request)
     {
+        $user = auth()->user();
 
        return app(Update::class)($user,$request);
     }
@@ -99,6 +102,7 @@ class UserController extends Controller
 
     public function logout(Request $request)
     {
+            auth()->user()->tokens()->delete();
             auth()->logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();

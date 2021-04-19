@@ -16,19 +16,21 @@ class Update {
         try{
             if($request->password)
             {
-                $userId = Auth::id();
-                $user = User::find($userId);
+                // dump($request->password);
+                // dump('12345678');
+                // dump(bcrypt($request->password));
+                // dd(bcrypt('12345678'));
                 $user->update([
-                    'password' => bcrypt($request->password),
+                    'password' => $request->password,
                 ]);
                 auth()->logout();
                 $request->session()->invalidate();
 
                 $request->session()->regenerateToken();
 
-                return redirect('/')
-                    ->back()
-                    ->withSuccess('Your password is changed');
+                return redirect()
+                    ->route('guest.login')
+                    ->with('success','Your password is changed');
             }
             // Image update handler
             if($file = $request->file('image'))
@@ -67,15 +69,14 @@ class Update {
                $user->notify(new UserNotification($subject,$values,$message));
                $user->meta->save();
 
-
-
+               return back()
+               ->with('success','Your profile has been updated');
 
         } catch(Throwable $e) {
             return back()
             ->withError($e->getMessage());
         }
 
-         return back()
-             ->with('success','Your profile has been updated');
+
     }
 }

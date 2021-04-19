@@ -16,7 +16,7 @@
             </div>
             <div class="mb-3">
                 <label for="password_confirmation">Repeat password</label>
-                <input type="password" class="form-control" name="password_confirmation" id="new_password_confirmation">
+                <input type="password" class="form-control" name="password_confirmation" id="password_confirmation">
             </div>
             <button type="submit" class="btn btn-danger">Change password </button><span class="text-muted">you will logout automatically</span>
         </form>

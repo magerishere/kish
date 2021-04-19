@@ -33,10 +33,13 @@
 
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a href='{{ url("/sms/post/ws.sms.ir/") }}' class="nav-link"></a>
+                        <a href="{{ route('welcome') }}" class="nav-link">{{ __('pages/index.main-page') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">{{ __('pages/index.main-page') }}</a>
+                        <a href="{{ route('setLanguage','en') }}" class="nav-link">En</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('setLanguage','fa') }}" class="nav-link">Fa</a>
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link">{{ __('pages/index.articles') }}</a>

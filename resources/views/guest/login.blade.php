@@ -145,8 +145,7 @@
             if(validateEmail(phone_number.value))
             {
                 formData = {email:phone_number.value} // if user want logging with email
-                phone_number.setAttribute('name','email');
-                phone_number.setAttribute('id','email');
+
             } else {
                 formData = {phone_number:phone_number.value} // if user want loggin with phone
             }
@@ -159,19 +158,22 @@
                     if(res.has_number == 1) {
                         code.innerHTML = login_form_with_phone_number;
                         loginBtn.onclick = function() {loginHandler()};
+                        twoMinutes = 15 * 1,
+                        display = document.querySelector('#time');
+                        startTimer(twoMinutes, display);
+
                     } else if (res.has_number == 0) {
                         change_form.innerHTML = register_form(phone_number.value);
                     } else if (res.has_email == 1) {
                         code.innerHTML = login_form_with_email;
                         loginBtn.onclick = function() {loginHandler()};
+                        phone_number.setAttribute('name','email');
+                        phone_number.setAttribute('id','email');
+                    } else if (res.has_email == 0) {
+                        change_form.innerHTML = register_form(phone_number.value);
                     }
 
-                    if(res.has_number)
-                    {
-                        twoMinutes = 15 * 1,
-                        display = document.querySelector('#time');
-                        startTimer(twoMinutes, display);
-                    }
+
                 },error:function(err) {
                     if(err.responseJSON.errors)
                     {
@@ -244,14 +246,14 @@
     const name = document.getElementById('name');
     const name_is_persian = /^[\u0600-\u06FF\s]+$/;
 
-    formData =   $('#form-register').serialize();
+    formData =  $('#form-register').serialize();
 
     $.ajax({
         url: '/register',
         type: 'post',
         data: formData,
         success:function(res) {
-            console.log(res);
+
             if(res.status == 200)
             {
                 window.location.href = 'http://example.test/user';
@@ -293,7 +295,7 @@
                 if(res.status == 200) {
                     window.location.href = 'http://example.test/user';
                 } else {
-                    document.getElementById('wrongCode').innerHTML = 'کد تایید اشتباه است';
+                    document.getElementById('wrongCode').innerHTML = 'ایمیل یا رمزعبور اشتباه است';
                 }
             },error:function(err) {
                 console.log(err);

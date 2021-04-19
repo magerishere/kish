@@ -213,7 +213,11 @@ class SmsController extends Controller
         try {
                 if($request->has('email'))
                 {
-                    return response()->json(['has_email'=>1]);
+                    if(User::where('email',$request->email)->first())
+                    {
+                        return response()->json(['has_email'=>1]);
+                    }
+                    return response()->json(['has_email'=>0]);
                 }
                 date_default_timezone_set("Asia/Tehran");
 

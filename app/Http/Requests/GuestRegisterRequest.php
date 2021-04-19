@@ -28,7 +28,8 @@ class GuestRegisterRequest extends FormRequest
             'verification_code' => 'required|bail|integer|digits:6',
             'name' => "required|max:40",
             'gender' => "required|boolean",
-            'email' => "email|max:50",
+            'email' => "nullable|email|max:50",
+        
 
         ];
     }

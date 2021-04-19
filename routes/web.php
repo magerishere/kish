@@ -10,27 +10,21 @@ use App\Http\Controllers\DemoController;
 use App\Http\Controllers\SmsController;
 use App\Http\Controllers\TicketController;
 use App\Models\User;
-use App\Models\VerificationCode;
-use Carbon\Carbon;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
-
-
-
-
-
+use Illuminate\Support\Facades\Session;
 
 Route::get('/test',function() {
+    dd(bcrypt('12345678'));
     return view('test');
 });
 Route::post('/test',function(Request $request) {
-    // $user = User::find(2);
-    // echo $user->password . '<br>';
-    // echo bcrypt($request->password) . '<br>';
+    $user = User::find(2);
+
+    dd(Auth::attempt(['email'=>$request->email,'password' => $request->password]));
     if(Auth::attempt(['email' => $request->email, 'password' => $request->password]))
     {
         $request->session()->regenerate();
@@ -40,10 +34,8 @@ Route::post('/test',function(Request $request) {
 })->name('test');
 
     Route::get('/',function(){
-
-        App::setLocale('fa');
         return view('index');
-    });
+    })->name('welcome');
 
 
 
@@ -52,7 +44,6 @@ Route::post('/test',function(Request $request) {
     });
 
 
-    // Route::get('/send-sms', [SmsController::class,'sendMessage'])->name('sendSms');
     Route::post('/sms', [SmsController::class,'trySendMessage'])->name('sendSms');
 /*
 |--------------------------------------------------------------------------
@@ -117,7 +108,11 @@ Route::post('/test',function(Request $request) {
 
     });
 
+    Route::get('/setLanguage/{language}',function($language) {
+        Session::put('language',$language);
 
+        return redirect()->back();
+    })->name('setLanguage');
 
 
 
@@ -157,6 +152,6 @@ Route::post('/test',function(Request $request) {
 |--------------------------------------------------------------------------
 */
     Route::get('export', [DemoController::class,'export'])->name('export');
-    Route::get('registrations/export_mapping', [DemoController::class, 'export_mapping'])->name('registrations.export_mapping') ;
+    Route::get('registrations/export_mapping', [DemoController::class, 'export_mapping'])->name('registrations.export_mapping');
     Route::get('importExportView', [DemoController::class,'importExportView']);
     Route::post('import', [DemoController::class,'import'])->name('import');

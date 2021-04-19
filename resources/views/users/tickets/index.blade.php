@@ -1,5 +1,8 @@
 @extends('layouts.main')
 
+@section('header')
+    {{-- Tickets --}}
+@endsection
 @section('content')
 <a href="{{ route('ticket.create') }}" class="btn btn-primary">Create</a>
     <table class="table table-hover">

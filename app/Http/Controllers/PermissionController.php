@@ -18,6 +18,7 @@ class PermissionController extends Controller
      */
     public function index()
     {
+
         return app(Index::class)($this);
     }
 

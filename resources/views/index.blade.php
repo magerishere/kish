@@ -3,7 +3,7 @@
 
 @section('header')
 <link rel="stylesheet" href="{{ asset('assets/css/index.css') }}">
-    
+
 @endsection
 @section('content')
 
@@ -48,7 +48,7 @@
                         <img class="card-img-top" src="{{ asset('assets/images/time.png') }}" alt="">
                         <div class="card-body">
                             <h4 class="card-title">
-                                سریع و آسان
+                                {{ __('pages/index.fast-and-easy') }}
                             </h4>
                             <p class="card-text">
                                 {{ __('pages/index.our-services-details') }}
@@ -64,7 +64,8 @@
                         <img class="card-img-top" src="{{ asset('assets/images/home.png') }}" alt="">
                         <div class="card-body">
                             <h4 class="card-title">
-                                سریع و آسان
+                                {{ __('pages/index.local-property') }}
+
                             </h4>
                             <p class="card-text">
                                 {{ __('pages/index.our-services-details') }}
@@ -79,7 +80,7 @@
                         <img class="card-img-top" src="{{ asset('assets/images/apartment-2.png') }}" alt="">
                         <div class="card-body">
                             <h4 class="card-title">
-                                سریع و آسان
+                                {{ __('pages/index.apartment') }}
                             </h4>
                             <p class="card-text">
                                 {{ __('pages/index.our-services-details') }}
