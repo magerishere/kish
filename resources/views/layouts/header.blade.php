@@ -27,7 +27,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <title>تجزیه و تحلیل داشبورد - Vuexy - قالب مدیریتی نوین پردازش آروکو</title>
     <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
-    <link href="../../../app-assets/images/fonts.googleapis.css" rel="stylesheet">
+  
 
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/backend/css/vendors-rtl.min.css') }}">

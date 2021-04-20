@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<div class="app-content content">
+<div class="app-content content todo-application">
     <div class="content-overlay"></div>
     <div class="header-navbar-shadow"></div>
     <div class="content-area-wrapper">
@@ -117,7 +117,7 @@
         </div>
         <div class="modal-footer">
           <fieldset class="form-group position-relative has-icon-left mb-0">
-            <button type="button" class="btn btn-primary add-todo-item waves-effect waves-light" data-dismiss="modal"><i class="feather icon-check d-block d-lg-none"></i>
+            <button type="button" onclick="console.log('hi')" class="btn btn-primary add-todo-item waves-effect waves-light" data-dismiss="modal"><i class="feather icon-check d-block d-lg-none"></i>
               <span class="d-none d-lg-block">اضافه کردن کار</span></button>
           </fieldset>
           <fieldset class="form-group position-relative has-icon-left mb-0">
