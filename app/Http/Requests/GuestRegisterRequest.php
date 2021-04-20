@@ -29,7 +29,7 @@ class GuestRegisterRequest extends FormRequest
             'name' => "required|max:40",
             'gender' => "required|boolean",
             'email' => "nullable|email|max:50",
-        
+
 
         ];
     }

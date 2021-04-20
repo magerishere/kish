@@ -18,9 +18,9 @@
     <!-- BEGIN Vendor JS-->
 
     <!-- BEGIN: Page Vendor JS-->
-    <script src="{{ asset('assets/backend/js/apexcharts.min.js') }}"></script>
+    {{-- <script src="{{ asset('assets/backend/js/apexcharts.min.js') }}"></script>
     <script src="{{ asset('assets/backend/js/tether.min.js') }}"></script>
-    <script src="{{ asset('assets/backend/js/shepherd.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/shepherd.min.js') }}"></script> --}}
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Theme JS-->
@@ -29,10 +29,11 @@
     <script src="{{ asset('assets/backend/js/components.min.js') }}"></script>
     <script src="{{ asset('assets/backend/js/customizer.min.js') }}"></script>
     <script src="{{ asset('assets/backend/js/footer.min.js') }}"></script>
+    
     <!-- END: Theme JS-->
 
     <!-- BEGIN: Page JS-->
-    <script src="../../../app-assets/js/scripts/pages/dashboard-analytics.min.js"></script>
+    {{-- <script src="../../../app-assets/js/scripts/pages/dashboard-analytics.min.js"></script> --}}
     <!-- END: Page JS-->
     <script>
         $.ajaxSetup({

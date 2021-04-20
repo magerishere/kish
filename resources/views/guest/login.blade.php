@@ -1,8 +1,5 @@
-@extends('layouts.main')
+@extends('guest.main')
 
-@section('header')
-    <link rel="stylesheet" href="{{ asset('assets/css/login.css') }}">
-@endsection
 
 @section('content')
 
@@ -280,6 +277,7 @@
 
 
 
+
  }
 
  const loginHandler = () => {
@@ -295,7 +293,7 @@
                 if(res.status == 200) {
                     window.location.href = 'http://example.test/user';
                 } else {
-                    document.getElementById('wrongCode').innerHTML = 'ایمیل یا رمزعبور اشتباه است';
+                    document.getElementById('wrongCode').innerHTML = 'رمزعبور اشتباه است';
                 }
             },error:function(err) {
                 console.log(err);

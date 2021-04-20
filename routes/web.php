@@ -80,7 +80,6 @@ Route::post('/test',function(Request $request) {
 
 
 
-
 /*
 |--------------------------------------------------------------------------
 | Get Routes
@@ -96,6 +95,7 @@ Route::post('/test',function(Request $request) {
     });
     Route::middleware('auth')->group(function () {
         Route::get('/notification',[UserController::class,'notification'])->name('user.notification');
+        Route::get('/user/{id}/delete-image',[UserController::class,'delete_image'])->name('user.delete_image');
     });
     Route::middleware('guest')->group(function () {
         Route::get('/register',function(){
@@ -114,7 +114,7 @@ Route::post('/test',function(Request $request) {
         return redirect()->back();
     })->name('setLanguage');
 
-    Route::get('/user',function() {
+    Route::get('/user-setting',function() {
         return view('users.setting');
     })->name('user.setting');
 

@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\UserService\Update;
 use App\Http\Requests\UserUpdateRequest;
 use App\Models\ApiToken;
+use App\Models\Image;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -65,11 +67,13 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit($id)
     {
-        $user = auth()->user();
+        $user = User::find($id);
         $genders = ['Male','Female'];
-        return view('users.edit',compact('user','genders'));
+        $roles = Role::all();
+        $permissions = Permission::all();
+        return view('users.edit',compact('user','genders','roles','permissions'));
     }
 
     /**
@@ -123,6 +127,18 @@ class UserController extends Controller
                 ]);
         }
         return view('users.notification',compact('notifications'));
+    }
+
+    public function delete_image($id)
+    {
+        $image = Image::where('imageable_id',$id)->first();
+        if($image)
+        {
+            unlink(public_path() . $image->url);
+            $image->delete();
+        }
+        return back()
+            ->withSuccess('your profile image has been removed');
     }
 
 }

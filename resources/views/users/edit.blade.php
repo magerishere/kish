@@ -17,36 +17,43 @@
                     <div class="card">
                         <div class="card-content">
                             <div class="card-body">
-                                <form novalidate="" action="{{ route('user.update', $user->id) }}" method="POST" enctype="multipart/form-data">
-                                    @csrf
-                                    @method("PATCH")
                                 <ul class="nav nav-tabs mb-3" role="tablist">
                                     <li class="nav-item">
                                         <a class="nav-link d-flex align-items-center active" id="account-tab"
-                                            data-toggle="tab" href="#account" aria-controls="account" role="tab"
-                                            aria-selected="true">
-                                            <i class="feather icon-user mr-25"></i><span
-                                                class="d-none d-sm-block">حساب</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link d-flex align-items-center" id="information-tab" data-toggle="tab"
-                                            href="#information" aria-controls="information" role="tab"
-                                            aria-selected="false">
-                                            <i class="feather icon-info mr-25"></i><span
-                                                class="d-none d-sm-block">اطلاعات</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link d-flex align-items-center" id="social-tab" data-toggle="tab"
-                                            href="#social" aria-controls="social" role="tab" aria-selected="false">
-                                            <i class="feather icon-share-2 mr-25"></i><span
-                                                class="d-none d-sm-block">اجتماعی</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                                <div class="tab-content">
-                                    <div class="tab-pane active" id="account" aria-labelledby="account-tab" role="tabpanel">
+                                        data-toggle="tab" href="#account" aria-controls="account" role="tab"
+                                        aria-selected="true">
+                                        <i class="feather icon-user mr-25"></i><span
+                                        class="d-none d-sm-block">حساب</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link d-flex align-items-center" id="information-tab" data-toggle="tab"
+                                    href="#information" aria-controls="information" role="tab"
+                                    aria-selected="false">
+                                    <i class="feather icon-info mr-25"></i><span
+                                    class="d-none d-sm-block">اطلاعات</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link d-flex align-items-center" id="social-tab" data-toggle="tab"
+                                href="#social" aria-controls="social" role="tab" aria-selected="false">
+                                <i class="feather icon-share-2 mr-25"></i><span
+                                class="d-none d-sm-block">اجتماعی</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link d-flex align-items-center" id="setting-tab" data-toggle="tab"
+                            href="#setting" aria-controls="setting" role="tab" aria-selected="false">
+                            <i class="feather icon-settings mr-25"></i><span
+                            class="d-none d-sm-block">تنظیمات</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="account" aria-labelledby="account-tab" role="tabpanel">
+                                        <form novalidate="" action="{{ route('user.update', $user->id) }}" method="POST" enctype="multipart/form-data">
+                                            @csrf
+                                            @method("PATCH")
                                         <!-- users edit media object start -->
                                         <div class="media mb-2">
                                             <a class="mr-2 my-25" href="#">
@@ -55,23 +62,24 @@
                                                     width="90">
                                                     <input id="file-input" name="image" type="file" style="display: none" />
                                             </a>
+
                                             <div class="media-body mt-50">
                                                 <h4 class="media-heading">{{ $user->meta->name }}</h4>
+                                                @if ($user->image)
                                                 <div class="col-12 d-flex mt-1 px-0">
                                                     <a href="#"
-                                                        class="btn btn-primary d-none d-sm-block mr-75 waves-effect waves-light">تغییر
-                                                        دادن</a>
-                                                    <a href="#"
-                                                        class="btn btn-primary d-block d-sm-none mr-75 waves-effect waves-light"><i
-                                                            class="feather icon-edit-1"></i></a>
-                                                    <a href="#"
+                                                    class="btn btn-primary d-block d-sm-none mr-75 waves-effect waves-light"><i
+                                                    class="feather icon-edit-1"></i></a>
+
+                                                    <a href="{{ route('user.delete_image',$user->id) }}"
                                                         class="btn btn-outline-danger d-none d-sm-block waves-effect waves-light">پاک
                                                         کردن</a>
-                                                    <a href="#"
+                                                        <a href="#"
                                                         class="btn btn-outline-danger d-block d-sm-none waves-effect waves-light"><i
-                                                            class="feather icon-trash-2"></i></a>
+                                                        class="feather icon-trash-2"></i></a>
+                                                    </div>
+                                                    @endif
                                                 </div>
-                                            </div>
                                         </div>
                                         <!-- users edit media object ends -->
                                         <!-- users edit account form start -->
@@ -102,7 +110,7 @@
                                                     <div class="form-group">
                                                         <div class="controls">
                                                             <label>جنسیت</label>
-                                                            <select name="gender" id="" class="form-control">
+                                                            <select name="gender" class="form-control">
                                                                 @foreach ($genders as $key => $gender)
                                                                 <option value="{{ $gender == 'Male' ? 0 : 1 }}"
                                                                     {{ $user->meta ? ($key == $user->meta->gender ? 'selected' : '') : '' }}>
@@ -117,11 +125,11 @@
 
                                                     <div class="form-group">
                                                         <label>آدرس</label>
-                                                        <input type="text" name="address" value="{{ $user->meta->address ?: '' }}" class="form-control" id="">
+                                                        <input type="text" name="address" value="{{ $user->meta->address ?: '' }}" class="form-control">
                                                     </div>
                                                     <div class="form-group">
                                                         <label>سن</label>
-                                                        <input type="text" name="year" value="{{ $user->meta->year ?: '' }}" class="form-control" id="">
+                                                        <input type="text" name="year" value="{{ $user->meta->year ?: '' }}" class="form-control">
                                                     </div>
                                                     <div class="form-group">
                                                         <label>شرکت</label>
@@ -129,140 +137,91 @@
                                                             value="WinDon Technologies Pvt Ltd" placeholder="نام شرکت">
                                                     </div>
                                                 </div>
+
                                                 @role('admin')
+                                                <div class="col-12">
+                                                    <div class="table-responsive border rounded px-1 ">
+                                                        <h6 class="border-bottom py-1 mx-1 mb-0 font-medium-2"><i
+                                                                class="feather icon-lock mr-50 "></i>نقش</h6>
+                                                        <table class="table table-borderless">
+                                                            <thead>
+
+                                                                <tr>
+
+                                                                    @foreach ($roles as $role)
+                                                                    <th>{{ $role->name }} <input type="checkbox" name="roles" value="{{ $role->id }}" {{ $user->hasRole($role) ? 'checked' : '' }}></th>
+
+                                                                    @endforeach
+                                                                </tr>
+                                                            </thead>
+
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                @endrole
+
+                                                @role('admin')
+                                                @if ($user->hasAnyRole($roles))
                                                 <div class="col-12">
                                                     <div class="table-responsive border rounded px-1 ">
                                                         <h6 class="border-bottom py-1 mx-1 mb-0 font-medium-2"><i
                                                                 class="feather icon-lock mr-50 "></i>اجازه</h6>
                                                         <table class="table table-borderless">
+
                                                             <thead>
+
                                                                 <tr>
-                                                                    <th>ماژول</th>
-                                                                    <th>خواندن</th>
-                                                                    <th>نوشتن</th>
-                                                                    <th>ایجاد کردن</th>
-                                                                    <th>حذف</th>
+                                                                    <th>نقش</th>
+
+
+                                                                    @foreach ($permissions as $permission)
+                                                                    <th>{{ $permission->name }}</th>
+
+
+                                                                    @endforeach
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
+
                                                                 <tr>
-                                                                    <td>کاربران</td>
+                                                                    @foreach ($user->roles as $role)
+                                                                    <td>{{ $role->name }}</td>
+                                                                    @endforeach
+
+                                                                    @foreach($permissions as $permission)
                                                                     <td>
-                                                                        <div class="custom-control custom-checkbox"><input
-                                                                                type="checkbox" id="users-checkbox1"
-                                                                                class="custom-control-input" checked="">
+                                                                        <input type="checkbox" name="permissions" value="{{ $permission->id }}" {{ $user->hasPermissionTo($permission->id) ? 'checked' : '' }}>
+                                                                        {{-- <div class="custom-control custom-checkbox"><input
+                                                                            type="checkbox" value="{{ $permission->id }}" id="{{ $permission->id }}"
+                                                                            class="custom-control-input" name="permissions" {{ $user->hasPermissionTo($permission->id) ? 'checked' : '' }}>
                                                                             <label class="custom-control-label"
-                                                                                for="users-checkbox1"></label>
-                                                                        </div>
+                                                                            for="{{ $permission->id }}"></label>
+                                                                        </div> --}}
                                                                     </td>
-                                                                    <td>
-                                                                        <div class="custom-control custom-checkbox"><input
-                                                                                type="checkbox" id="users-checkbox2"
-                                                                                class="custom-control-input"><label
-                                                                                class="custom-control-label"
-                                                                                for="users-checkbox2"></label>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td>
-                                                                        <div class="custom-control custom-checkbox"><input
-                                                                                type="checkbox" id="users-checkbox3"
-                                                                                class="custom-control-input"><label
-                                                                                class="custom-control-label"
-                                                                                for="users-checkbox3"></label>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td>
-                                                                        <div class="custom-control custom-checkbox"><input
-                                                                                type="checkbox" id="users-checkbox4"
-                                                                                class="custom-control-input" checked="">
-                                                                            <label class="custom-control-label"
-                                                                                for="users-checkbox4"></label>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>مقالات</td>
-                                                                    <td>
-                                                                        <div class="custom-control custom-checkbox"><input
-                                                                                type="checkbox" id="users-checkbox5"
-                                                                                class="custom-control-input"><label
-                                                                                class="custom-control-label"
-                                                                                for="users-checkbox5"></label>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td>
-                                                                        <div class="custom-control custom-checkbox"><input
-                                                                                type="checkbox" id="users-checkbox6"
-                                                                                class="custom-control-input" checked="">
-                                                                            <label class="custom-control-label"
-                                                                                for="users-checkbox6"></label>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td>
-                                                                        <div class="custom-control custom-checkbox"><input
-                                                                                type="checkbox" id="users-checkbox7"
-                                                                                class="custom-control-input"><label
-                                                                                class="custom-control-label"
-                                                                                for="users-checkbox7"></label>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td>
-                                                                        <div class="custom-control custom-checkbox"><input
-                                                                                type="checkbox" id="users-checkbox8"
-                                                                                class="custom-control-input" checked="">
-                                                                            <label class="custom-control-label"
-                                                                                for="users-checkbox8"></label>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>پرسنل</td>
-                                                                    <td>
-                                                                        <div class="custom-control custom-checkbox"><input
-                                                                                type="checkbox" id="users-checkbox9"
-                                                                                class="custom-control-input" checked="">
-                                                                            <label class="custom-control-label"
-                                                                                for="users-checkbox9"></label>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td>
-                                                                        <div class="custom-control custom-checkbox"><input
-                                                                                type="checkbox" id="users-checkbox10"
-                                                                                class="custom-control-input" checked="">
-                                                                            <label class="custom-control-label"
-                                                                                for="users-checkbox10"></label>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td>
-                                                                        <div class="custom-control custom-checkbox"><input
-                                                                                type="checkbox" id="users-checkbox11"
-                                                                                class="custom-control-input"><label
-                                                                                class="custom-control-label"
-                                                                                for="users-checkbox11"></label>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td>
-                                                                        <div class="custom-control custom-checkbox"><input
-                                                                                type="checkbox" id="users-checkbox12"
-                                                                                class="custom-control-input"><label
-                                                                                class="custom-control-label"
-                                                                                for="users-checkbox12"></label>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
+                                                                    @endforeach
+
+                                                                    </tr>
                                                             </tbody>
                                                         </table>
                                                     </div>
                                                 </div>
-                                                @endrole
+                                                @endif
+
+                                                <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+                                                    <button type="button" onclick="apply_roles_permissions({{ $user->id }})"
+                                                        class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-light">
+                                                        اعمال نقش</button>
+
+                                                </div>
+                                                @else
                                                 <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
                                                     <button type="submit"
                                                         class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-light">
                                                         ذخیره تغییرات</button>
-                                                    <a href="{{ route('user.setting',$user->id) }}"
-                                                        class="btn btn-outline-warning waves-effect waves-light">تنظیم
-                                                        مجدد</a>
+
                                                 </div>
+                                                @endrole
+
                                             </div>
                                         </form>
                                         <!-- users edit account form ends -->
@@ -979,6 +938,60 @@
                                         </form>
                                         <!-- users edit Info form ends -->
                                     </div>
+                                    <div class="tab-pane" id="setting" aria-labelledby="setting-tab" role="tabpanel">
+                                        <!-- users edit socail form start -->
+                                        <form novalidate="" action="{{ route('user.update', $user->id) }}" method="POST">
+                                            @csrf
+                                            @method("PATCH")
+
+                                        <!-- users edit account form start -->
+
+                                            <div class="row">
+                                                <div class="col-12 col-sm-6">
+                                                    <div class="form-group">
+                                                        <div class="controls">
+                                                            <label>پست الکترونیک</label>
+                                                            <input type="email" class="form-control" name="email"
+                                                                value="{{ $user->email }}" placeholder="ایمیل"
+                                                                required=""
+                                                                data-validation-required-message="This email field is required">
+                                                            <div class="help-block"></div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <div class="controls">
+                                                            <label> رمزعبور</label>
+                                                            <input type="text" class="form-control" name="password"
+                                                                placeholder="رمزعبور"
+                                                                required=""
+                                                                data-validation-required-message="This name field is required">
+                                                            <div class="help-block"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="controls">
+                                                            <label>تکرار رمزعبور</label>
+                                                            <input type="text" class="form-control" name="password_confirmation"
+                                                             placeholder="تکرار رمزعبور"
+                                                            required=""
+                                                            data-validation-required-message="This name field is required">
+                                                        <div class="help-block"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+                                                    <p>پس از ذخیره تغییرات به صورت خودکار از اکانت خارج میشوید!</p>
+                                                    <button type="submit"
+                                                        class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-light">
+                                                        ذخیره تغییرات</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <!-- users edit socail form ends -->
+                                    </div>
                                     <div class="tab-pane" id="social" aria-labelledby="social-tab" role="tabpanel">
                                         <!-- users edit socail form start -->
                                         <form novalidate="">
@@ -1083,8 +1096,66 @@
 
 @section('footer')
     <script>
+        let index;
+        let roleIds = [];
+        let permissionIds = [];
+        const roles = document.getElementsByName('roles');
+        const permissions = document.getElementsByName('permissions');
+
+        roles.forEach(role => {
+            if(role.checked) {
+                roleIds.push(role.value);
+            }
+        });
+        permissions.forEach(permission => {
+            if(permission.checked) {
+                permissionIds.push(permission.value);
+            }
+        });
+
+
+
         $('#avatar-user').on('click',function() {
             document.getElementById('file-input').click();
         });
+
+        $('input[name="roles"]').on('click',function() {
+            if($(this).is(':checked'))
+            {
+                roleIds.push($(this).val())
+            } else {
+                index = roleIds.indexOf($(this).val());
+                roleIds.splice(index,1);
+            }
+            console.log(roleIds);
+
+        });
+
+        $('input[name="permissions"]').on('click',function() {
+            if($(this).is(':checked'))
+            {
+                permissionIds.push($(this).val());
+            } else {
+                index = permissionIds.indexOf($(this).val());
+                permissionIds.splice(index,1);
+            }
+            console.log(permissionIds);
+        });
+
+        function apply_roles_permissions(id) {
+            console.log(roleIds,permissionIds);
+            $.ajax({
+                type: 'post',
+                url: `/user-list/${id}/role-permission-handler`,
+                data: {roleIds,permissionIds},
+                success:function(res) {
+                    location.reload();
+                },error:function(err) {
+                    console.log(err);
+                },
+            });
+        }
+
+
     </script>
 @endsection

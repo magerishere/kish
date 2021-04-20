@@ -16,10 +16,7 @@ class Update {
         try{
             if($request->password)
             {
-                // dump($request->password);
-                // dump('12345678');
-                // dump(bcrypt($request->password));
-                // dd(bcrypt('12345678'));
+
                 $user->update([
                     'password' => $request->password,
                 ]);
@@ -50,7 +47,7 @@ class Update {
             }
 
             // User meta update handler
-            
+                $user->email               = $request->input('email');
                 $user->meta->name          = $request->input('name');
                 $user->meta->gender        = $request->input('gender');
                 $user->meta->address       = $request->input('address');
@@ -58,6 +55,7 @@ class Update {
 
                 // Check for which values of send email profile updated
                $values = [];
+               if ($user->meta->isDirty('email'))          array_push($values,'email');
                if ($user->meta->isDirty('name'))           array_push($values,'name');
                if ($user->meta->isDirty('gender'))         array_push($values,'gender');
                if ($user->meta->isDirty('address'))        array_push($values,'address');
@@ -67,6 +65,7 @@ class Update {
                $subject = 'User Notification';
                $message = 'at your profile changed by ' . $user->email;
                $user->notify(new UserNotification($subject,$values,$message));
+               $user->save();
                $user->meta->save();
 
                return back()
