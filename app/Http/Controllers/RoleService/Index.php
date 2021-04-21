@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\RoleService;
 
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Throwable;
 
@@ -10,12 +11,13 @@ class Index {
     {
         try{
             $roles = Role::all();
+            $permissions = Permission::all();
 
         } catch(Throwable $e) {
             return back()
             ->withError($e->getMessage());
         }
-        return view('admin.roles.index',compact('roles'));
+        return view('admin.roles.index',compact('roles','permissions'));
 
     }
 }

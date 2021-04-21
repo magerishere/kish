@@ -9,13 +9,13 @@ class Store {
     public function __invoke($request)
     {
         try {
-            Role::create(['name'=>$request->input('name')]);
+           $role = Role::create(['name'=>$request->input('name')]);
+           $role->givePermissionTo($request->permissionIds);
         } catch(Throwable $exeption) {
             return back()
                 ->withError('cannot store role' . $exeption);
         }
-        return back()
-            ->withSuccess('role has been created!');
+        return response()->json(['roleId'=>$role->id]);
 
     }
 }

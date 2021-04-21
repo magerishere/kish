@@ -16,7 +16,7 @@ class Destroy {
             return back()
             ->withError($e->getMessage());
         }
-        return back()
-            ->withSuccess('Permission has been deleted!');
+        return response()
+            ->json(['status'=>200]);
     }
 }

@@ -13,10 +13,14 @@ class Update {
             $role = Role::findById($id);
 
             $role->update(['name'=>$request->name]);
+            $role->syncPermissions($request->permissionIds);
+
         } catch(Throwable $e) {
             return back()
             ->withError($e->getMessage());
         }
+
+        return response()->json(['status'=>200]);
 
     }
 }

@@ -9,7 +9,7 @@ use App\Http\Controllers\RoleService\Store;
 use App\Http\Controllers\RoleService\Update;
 use App\Http\Controllers\RoleService\UpdatePermissions;
 use Illuminate\Http\Request;
-
+use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {

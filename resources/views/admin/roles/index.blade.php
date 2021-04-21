@@ -16,7 +16,7 @@
   </span>
  <div class="todo-app-menu">
       <div class="form-group text-center add-task">
-          <button type="button" class="btn btn-primary btn-block my-1 waves-effect waves-light" data-toggle="modal" data-target="#addTaskModal">اضافه کردن کار</button>
+          <button type="button" class="btn btn-primary btn-block my-1 waves-effect waves-light" data-toggle="modal" data-target="#addTaskModal">اضافه کردن نقش</button>
       </div>
       <div class="sidebar-menu-list ps ps--active-y">
           <div class="list-group list-group-filters font-medium-1">
@@ -34,10 +34,10 @@
           <hr>
           <h5 class="mt-2 mb-1 pt-25">برچسب ها</h5>
           <div class="list-group list-group-labels font-medium-1">
+
               <a href="#" class="list-group-item list-group-item-action border-0 d-flex align-items-center"><span class="bullet bullet-primary mr-1"></span> Frontend</a>
-              <a href="#" class="list-group-item list-group-item-action border-0 d-flex align-items-center"><span class="bullet bullet-warning mr-1"></span> Backend</a>
-              <a href="#" class="list-group-item list-group-item-action border-0 d-flex align-items-center"><span class="bullet bullet-success mr-1"></span> مستند</a>
-              <a href="#" class="list-group-item list-group-item-action border-0 d-flex align-items-center"><span class="bullet bullet-danger mr-1"></span> خطا</a>
+
+
           </div>
       <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 517px; left: 253px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 510px;"></div></div></div>
   </div>
@@ -50,7 +50,7 @@
       <form id="form-add-todo" class="todo-input" action="{{ route('role.store') }}" method="POST">
         @csrf
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">اضافه کردن کار</h5>
+          <h5 class="modal-title" id="exampleModalLabel">اضافه کردن نقش</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
@@ -63,50 +63,20 @@
                 <i class="dropdown-toggle mr-0 mb-1 feather icon-tag" id="todoLabel" data-toggle="dropdown">
                 </i>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="todoLabel">
-                  <div class="dropdown-item">
-                    <div class="vs-checkbox-con">
-                        <input type="checkbox" data-color="primary" data-value="Frontend">
-                        <span class="vs-checkbox">
-                          <span class="vs-checkbox--check">
-                            <i class="vs-icon feather icon-check mr-0"></i>
-                          </span>
-                        </span>
-                        <span>Frontend</span>
+                    @foreach ($permissions as $permission)
+
+                    <div class="dropdown-item">
+                        <div class="vs-checkbox-con">
+                            <input type="checkbox" value="{{ $permission->id }}" data-color="primary" data-value="{{ $permission->name }}">
+                            <span class="vs-checkbox">
+                                <span class="vs-checkbox--check">
+                                    <i class="vs-icon feather icon-check mr-0"></i>
+                                </span>
+                            </span>
+                            <span>{{ $permission->name }}</span>
+                        </div>
                     </div>
-                  </div>
-                  <div class="dropdown-item">
-                    <div class="vs-checkbox-con">
-                        <input type="checkbox" data-color="warning" data-value="Backend">
-                        <span class="vs-checkbox">
-                          <span class="vs-checkbox--check">
-                            <i class="vs-icon feather icon-check mr-0"></i>
-                          </span>
-                        </span>
-                        <span>Backend</span>
-                    </div>
-                  </div>
-                  <div class="dropdown-item">
-                    <div class="vs-checkbox-con">
-                        <input type="checkbox" data-color="success" data-value="Doc">
-                        <span class="vs-checkbox">
-                          <span class="vs-checkbox--check">
-                            <i class="vs-icon feather icon-check mr-0"></i>
-                          </span>
-                        </span>
-                        <span>مستند</span>
-                    </div>
-                  </div>
-                  <div class="dropdown-item">
-                    <div class="vs-checkbox-con">
-                        <input type="checkbox" data-color="danger" data-value="Bug">
-                        <span class="vs-checkbox">
-                          <span class="vs-checkbox--check">
-                            <i class="vs-icon feather icon-check mr-0"></i>
-                          </span>
-                        </span>
-                        <span>خطا</span>
-                    </div>
-                  </div>
+                    @endforeach
                 </div>
               </div>
           </div>
@@ -117,8 +87,8 @@
         </div>
         <div class="modal-footer">
           <fieldset class="form-group position-relative has-icon-left mb-0">
-            <button type="button" onclick="console.log('hi')" class="btn btn-primary add-todo-item waves-effect waves-light" data-dismiss="modal"><i class="feather icon-check d-block d-lg-none"></i>
-              <span class="d-none d-lg-block">اضافه کردن کار</span></button>
+            <button type="button" class="btn btn-primary add-todo-item waves-effect waves-light" data-dismiss="modal"><i class="feather icon-check d-block d-lg-none"></i>
+              <span class="d-none d-lg-block">اضافه کردن نقش</span></button>
           </fieldset>
           <fieldset class="form-group position-relative has-icon-left mb-0">
             <button type="button" class="btn btn-outline-light waves-effect waves-light" data-dismiss="modal"><i class="feather icon-x d-block d-lg-none"></i>
@@ -159,7 +129,7 @@
                   <div class="todo-title-area d-flex align-items-center">
                     <div class="title-wrapper d-flex">
                       <div class="vs-checkbox-con">
-                          <input type="checkbox">
+                          <input type="checkbox" class="roleId" value="{{ $role->id }}">
                           <span class="vs-checkbox vs-checkbox-sm">
                             <span class="vs-checkbox--check">
                               <i class="vs-icon feather icon-check"></i>
@@ -168,21 +138,25 @@
                       </div>
                       <h6 class="todo-title mt-50 mx-50">{{ $role->name }}</h6>
                     </div>
+                    @foreach ($role->permissions as $permission)
+
                     <div class="chip-wrapper">
-                      <div class="chip mb-0">
-                        <div class="chip-body">
-                          <span class="chip-text" data-value="Frontend"><span class="bullet bullet-primary bullet-xs"></span> Frontend</span>
+                        <div class="chip mb-0">
+                            <div class="chip-body">
+                                <span class="chip-text" data-value="{{ $permission->name }}"><span class="bullet bullet-primary bullet-xs"></span> {{ $permission->name }}</span>
+                            </div>
                         </div>
-                      </div>
                     </div>
+                    @endforeach
+
                   </div>
                   <div class="float-right todo-item-action d-flex">
                     <a class="todo-item-info"><i class="feather icon-info"></i></a>
                     <a class="todo-item-favorite"><i class="feather icon-star"></i></a>
-                    <a class="todo-item-delete"><i class="feather icon-trash"></i></a>
+                    <a class="todo-item-delete" data-value="{{ $role->id }}"><i class="feather icon-trash"></i></a>
                   </div>
                 </div>
-                <p class="todo-desc truncate mb-0">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.</p>
+
               </li>
               @endforeach
 
@@ -200,6 +174,7 @@
   <div class="modal-content">
     <section class="todo-form">
       <form id="form-edit-todo" class="todo-input">
+        <input type="hidden" class="roleId" value="">
         <div class="modal-header">
           <h5 class="modal-title" id="editTodoTask">ویرایش کار</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -214,58 +189,25 @@
                 <i class="dropdown-toggle mr-0 mb-1 feather icon-tag" id="todoEditLabel" data-toggle="dropdown">
                 </i>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="todoEditLabel">
-                  <div class="dropdown-item">
-                    <div class="vs-checkbox-con">
-                        <input type="checkbox" data-color="primary" data-value="Frontend">
-                        <span class="vs-checkbox">
-                          <span class="vs-checkbox--check">
-                            <i class="vs-icon feather icon-check mr-0"></i>
-                          </span>
-                        </span>
-                        <span>Frontend</span>
+                    @foreach ($permissions as $permission)
+
+                    <div class="dropdown-item">
+                        <div class="vs-checkbox-con">
+                            <input type="checkbox" value="{{ $permission->id }}" data-color="primary" data-value="{{ $permission->name }}">
+                            <span class="vs-checkbox">
+                                <span class="vs-checkbox--check">
+                                    <i class="vs-icon feather icon-check mr-0"></i>
+                                </span>
+                            </span>
+                            <span>{{ $permission->name }}</span>
+                        </div>
                     </div>
-                  </div>
-                  <div class="dropdown-item">
-                    <div class="vs-checkbox-con">
-                        <input type="checkbox" data-color="warning" data-value="Backend">
-                        <span class="vs-checkbox">
-                          <span class="vs-checkbox--check">
-                            <i class="vs-icon feather icon-check mr-0"></i>
-                          </span>
-                        </span>
-                        <span>Backend</span>
-                    </div>
-                  </div>
-                  <div class="dropdown-item">
-                    <div class="vs-checkbox-con">
-                        <input type="checkbox" data-color="success" data-value="Doc">
-                        <span class="vs-checkbox">
-                          <span class="vs-checkbox--check">
-                            <i class="vs-icon feather icon-check mr-0"></i>
-                          </span>
-                        </span>
-                        <span>مستند</span>
-                    </div>
-                  </div>
-                  <div class="dropdown-item">
-                    <div class="vs-checkbox-con">
-                        <input type="checkbox" data-color="danger" data-value="Bug">
-                        <span class="vs-checkbox">
-                          <span class="vs-checkbox--check">
-                            <i class="vs-icon feather icon-check mr-0"></i>
-                          </span>
-                        </span>
-                        <span>خطا</span>
-                    </div>
-                  </div>
+                    @endforeach
                 </div>
               </div>
           </div>
           <fieldset class="form-group">
             <input type="text" class="edit-todo-item-title form-control" placeholder="عنوان">
-          </fieldset>
-          <fieldset class="form-group">
-              <textarea class="edit-todo-item-desc form-control" rows="3" placeholder="افزدون توضیحات"></textarea>
           </fieldset>
         </div>
         <div class="modal-footer">
@@ -293,44 +235,5 @@
 
 
 @section('footer')
-  <script src="{{ asset('assets/backend/js/app-todo.min.js') }}"></script>
-    <script>
-        let currentInput;
-        let currentId;
-        let currentName;
-        let message;
-
-        const editHandler = (id) => {
-            currentInput = document.getElementById(`role${id}`);
-            currentInput.disabled = false;
-            currentId = id;
-        }
-
-
-
-
-        $(document).on('keypress',function(e) {
-            currentName = document.getElementById(`role${currentId}`).value;
-            if(e.which == 13) {
-                $.ajax({
-                    type: "PATCH",
-                    url:  `/role/${currentId}`,
-                    data: {name:currentName},
-                    success:function(res) {
-                        if(message) message.innerHTML = '';
-                        message = document.getElementById(`message${currentId}`);
-                        message.innerHTML = "success";
-                        message.classList.add('text-success');
-                        currentInput.disabled = true;
-                    },error:function(err) {
-                        let message = document.getElementById(`message${currentId}`);
-                        message.innerHTML = "error";
-                        message.classList.add('text-danger');
-
-                    },
-                });
-            }
-        });
-
-    </script>
+  <script src="{{ asset('assets/backend/js/app-todo-roles.min.js') }}"></script>
 @endsection
