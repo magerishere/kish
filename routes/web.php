@@ -66,6 +66,8 @@ Route::post('/test',function(Request $request) {
     Route::middleware(['auth','admin'])->group(function () {
         Route::post('/role/{id}/update/permissions',[RoleController::class,'updatePermissions'])->name('role.updatePermissions');
         Route::post('/user-list/{id}/role-permission-handler',[AdminController::class,'userListRolePermissionHandler']);
+        Route::post('/role/search/permissions',[RoleController::class,'searchPermissions']);
+
     });
 
     Route::middleware('auth')->group(function () {

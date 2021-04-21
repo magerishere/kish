@@ -12,12 +12,13 @@ class Index {
         try{
             $roles = Role::all();
             $permissions = Permission::all();
+            $parentPermissions = ['articles','users'];
 
         } catch(Throwable $e) {
             return back()
             ->withError($e->getMessage());
         }
-        return view('admin.roles.index',compact('roles','permissions'));
+        return view('admin.roles.index',compact('roles','permissions','parentPermissions'));
 
     }
 }

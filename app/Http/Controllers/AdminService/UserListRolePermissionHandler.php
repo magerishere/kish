@@ -13,12 +13,12 @@ class UserListRolePermissionHandler {
             $user->syncRoles($request->roleIds);
             $user->syncPermissions($request->permissionIds);
             session()->flash('success','Actions applied');
-            return response()->json(['status'=>200]);
 
         } catch(Throwable $e) {
             return back()
             ->withError($e->getMessage());
         }
+        return response()->json(['status'=>200]);
     }
 }
 

@@ -168,39 +168,28 @@
                                                                 class="feather icon-lock mr-50 "></i>اجازه</h6>
                                                         <table class="table table-borderless">
 
-                                                            <thead>
 
-                                                                <tr>
-                                                                    <th>نقش</th>
-
-
-                                                                    @foreach ($permissions as $permission)
-                                                                    <th>{{ $permission->name }}</th>
-
-
-                                                                    @endforeach
-                                                                </tr>
-                                                            </thead>
                                                             <tbody>
-
+                                                                @foreach ($user->roles as $role)
                                                                 <tr>
-                                                                    @foreach ($user->roles as $role)
                                                                     <td>{{ $role->name }}</td>
-                                                                    @endforeach
 
-                                                                    @foreach($permissions as $permission)
+                                                                    @foreach($role->permissions as $permission)
                                                                     <td>
-                                                                        <input type="checkbox" name="permissions" value="{{ $permission->id }}" {{ $user->hasPermissionTo($permission->id) ? 'checked' : '' }}>
+
+                                                                        <input type="checkbox" name="permissions" value="{{ $permission->id }}" {{ $user->hasAnyDirectPermission($permission->id) ? 'checked' : '' }}>
                                                                         {{-- <div class="custom-control custom-checkbox"><input
                                                                             type="checkbox" value="{{ $permission->id }}" id="{{ $permission->id }}"
                                                                             class="custom-control-input" name="permissions" {{ $user->hasPermissionTo($permission->id) ? 'checked' : '' }}>
                                                                             <label class="custom-control-label"
                                                                             for="{{ $permission->id }}"></label>
                                                                         </div> --}}
+                                                                        <span>{{ $permission->name }}</span>
                                                                     </td>
                                                                     @endforeach
 
-                                                                    </tr>
+                                                                </tr>
+                                                                @endforeach
                                                             </tbody>
                                                         </table>
                                                     </div>

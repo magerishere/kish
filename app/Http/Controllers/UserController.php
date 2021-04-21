@@ -73,6 +73,7 @@ class UserController extends Controller
         $genders = ['Male','Female'];
         $roles = Role::all();
         $permissions = Permission::all();
+
         return view('users.edit',compact('user','genders','roles','permissions'));
     }
 

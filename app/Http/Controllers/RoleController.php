@@ -9,6 +9,7 @@ use App\Http\Controllers\RoleService\Store;
 use App\Http\Controllers\RoleService\Update;
 use App\Http\Controllers\RoleService\UpdatePermissions;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
@@ -92,5 +93,15 @@ class RoleController extends Controller
     public function updatePermissions(Request $request,$id)
     {
         return app(UpdatePermissions::class)($request,$id);
+    }
+
+
+    public function searchPermissions(Request $request)
+    {
+        $role = Role::where('name',$request->roleName)->first();
+
+        $permissions = Permission::where('name','like','%' . $request->parentName . '%')->get();
+
+        return response()->json(['permissions' => $permissions,'roleHasPermissions'=>$role->permissions]);
     }
 }

@@ -32,11 +32,11 @@
               <a href="#" class="list-group-item list-group-item-action border-0"><i class="font-medium-5 feather icon-trash mr-50"></i>&nbsp; حذف شده</a>
           </div>
           <hr>
-          <h5 class="mt-2 mb-1 pt-25">برچسب ها</h5>
+          <h5 class="mt-2 mb-1 pt-25"><a href="{{ route('role.index') }}">نقش ها</a></h5>
           <div class="list-group list-group-labels font-medium-1">
-
-              <a href="#" class="list-group-item list-group-item-action border-0 d-flex align-items-center"><span class="bullet bullet-primary mr-1"></span> Frontend</a>
-
+            @foreach ($roles as $role)
+                <a href="#" class="list-group-item list-group-item-action border-0 d-flex align-items-center"><span class="bullet bullet-primary mr-1"></span> {{ $role->name }}</a>
+            @endforeach
 
           </div>
       <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 517px; left: 253px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 510px;"></div></div></div>
