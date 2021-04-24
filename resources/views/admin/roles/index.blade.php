@@ -21,12 +21,8 @@
                                 data-toggle="modal" data-target="#addTaskModal">اضافه کردن نقش</button>
                         </div>
                         <div class="sidebar-menu-list ps ps--active-y">
-                            <div class="list-group list-group-filters font-medium-1">
-                                <a href="#" class="list-group-item list-group-item-action border-0 pt-0 active">
-                                    <i class="font-medium-5 feather icon-mail mr-50"></i> همه</a>
-                            </div>
-                            <hr>
 
+                          <hr>
 
                             <h5 class="mt-2 mb-1 pt-25"><a href="{{ route('permission.index') }}">امتیازات</a></h5>
                             <div class="list-group list-group-labels font-medium-1">
@@ -96,14 +92,19 @@
                                                 placeholder="عنوان">
 
                                         </fieldset>
-                                        @foreach ($parentPermissions as $parentPermission)
+                                        @foreach ($permissions as $permission)
 
-                                        <a href="#"
-                                            class="btn btn-primary btn-block my-1 waves-effect waves-light searchPermissions"
-                                            data-value="{{ $parentPermission }}">{{ $parentPermission }}</a>
-                                        <select multiple="multiple" name="custom-select[]" size="4"
-                                            class="custom-select" style="display: none">
-                                        </select>
+                                        <div class="title-wrapper d-flex">
+                                            <div class="vs-checkbox-con">
+                                                <input type="checkbox" class="permissionId" data-value="{{ $permission->name }}" value="{{ $permission->id }}">
+                                                <span class="vs-checkbox vs-checkbox-sm">
+                                                    <span class="vs-checkbox--check">
+                                                        <i class="vs-icon feather icon-check"></i>
+                                                    </span>
+                                                </span>
+                                            </div>
+                                            <h6 class="todo-title mt-50 mx-50">{{ $permission->name }}</h6>
+                                        </div>
                                         @endforeach
 
                                     </div>
@@ -167,9 +168,9 @@
                                                         </div>
                                                         <h6 class="todo-title mt-50 mx-50">{{ $role->name }}</h6>
                                                     </div>
+                                                    <div class="chip-wrapper">
                                                     @foreach ($role->permissions as $permission)
 
-                                                    <div class="chip-wrapper">
                                                         <div class="chip mb-0">
                                                             <div class="chip-body">
                                                                 <span class="chip-text"
@@ -178,8 +179,8 @@
                                                                     {{ $permission->name }}</span>
                                                             </div>
                                                         </div>
+                                                        @endforeach
                                                     </div>
-                                                    @endforeach
 
                                                 </div>
                                                 <div class="float-right todo-item-action d-flex">
@@ -208,6 +209,8 @@
                         </div>
                     </div>
                     <!-- Modal -->
+
+
                     <div class="modal fade" id="editTaskModal" tabindex="-1" role="dialog"
                         aria-labelledby="editTodoTask" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-sm"
@@ -257,15 +260,20 @@
                                                 <input type="text" class="edit-todo-item-title form-control"
                                                     placeholder="عنوان">
                                             </fieldset>
-                                            @foreach ($parentPermissions as $parentPermission)
+                                            @foreach ($permissions as $permission)
 
-                                            <a href="#"
-                                                class="btn btn-primary btn-block my-1 waves-effect waves-light searchPermissions"
-                                                data-value="{{ $parentPermission }}">{{ $parentPermission }}</a>
-                                            <select multiple="multiple" name="custom-select[]" size="4"
-                                                class="custom-select" style="display: none">
-                                            </select>
-                                            @endforeach
+                                        <div class="title-wrapper d-flex">
+                                            <div class="vs-checkbox-con">
+                                                <input type="checkbox" class="permissionIdUpdate" data-value="{{ $permission->name }}"  value="{{ $permission->id }}">
+                                                <span class="vs-checkbox vs-checkbox-sm">
+                                                    <span class="vs-checkbox--check">
+                                                        <i class="vs-icon feather icon-check"></i>
+                                                    </span>
+                                                </span>
+                                            </div>
+                                            <h6 class="todo-title mt-50 mx-50">{{ $permission->name }}</h6>
+                                        </div>
+                                        @endforeach
                                         </div>
                                         <div class="modal-footer">
                                             <fieldset class="form-group position-relative has-icon-left mb-0">
@@ -287,6 +295,7 @@
                             </div>
                         </div>
                     </div>
+
 
                 </div>
             </div>

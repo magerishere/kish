@@ -19,18 +19,8 @@
           <button type="button" class="btn btn-primary btn-block my-1 waves-effect waves-light" data-toggle="modal" data-target="#addTaskModal">اضافه کردن امتیاز</button>
       </div>
       <div class="sidebar-menu-list ps ps--active-y">
-          <div class="list-group list-group-filters font-medium-1">
-              <a href="#" class="list-group-item list-group-item-action border-0 pt-0 active">
-                  <i class="font-medium-5 feather icon-mail mr-50"></i>  همه</a>
-          </div>
-          <hr>
-          <h5 class="mt-2 mb-1 pt-25">فیلترها</h5>
-          <div class="list-group list-group-filters font-medium-1">
-              <a href="#" class="list-group-item list-group-item-action border-0"><i class="font-medium-5 feather icon-star mr-50"></i>ستاره دار</a>
-              <a href="#" class="list-group-item list-group-item-action border-0"><i class="font-medium-5 feather icon-info mr-50"></i>&nbsp; مهم</a>
-              <a href="#" class="list-group-item list-group-item-action border-0"><i class="font-medium-5 feather icon-check mr-50"></i>&nbsp; تکمیل شد</a>
-              <a href="#" class="list-group-item list-group-item-action border-0"><i class="font-medium-5 feather icon-trash mr-50"></i>&nbsp; حذف شده</a>
-          </div>
+
+         
           <hr>
           <h5 class="mt-2 mb-1 pt-25"><a href="{{ route('role.index') }}">نقش ها</a></h5>
           <div class="list-group list-group-labels font-medium-1">
@@ -138,16 +128,16 @@
                       </div>
                       <h6 class="todo-title mt-50 mx-50">{{ $permission->name }}</h6>
                     </div>
+                    <div class="chip-wrapper">
                     @foreach ($permission->roles as $role)
 
-                    <div class="chip-wrapper">
                         <div class="chip mb-0">
                             <div class="chip-body">
                                 <span class="chip-text" data-value="{{ $role->name }}"><span class="bullet bullet-primary bullet-xs"></span> {{ $role->name }}</span>
                             </div>
                         </div>
-                    </div>
                     @endforeach
+                    </div>
 
                   </div>
                   <div class="float-right todo-item-action d-flex">
