@@ -150,8 +150,9 @@ License: You must have a valid license purchased only from themeforest(the above
                                         class="flag-icon flag-icon-us"></i> انگلیسی</a><a class="dropdown-item"
                                     href="{{ route('setLanguage', 'fa') }}" data-language="fa"><i
                                         class="flag-icon flag-icon-ir"></i>فارسی</a><a class="dropdown-item"
-                                        href="{{ route('setLanguage', 'fa') }}" data-language="fa"><i
-                                            class="flag-icon flag-icon-ir"></i>{{ __('pages/index.main-page') }}</a></div>
+                                    href="{{ route('setLanguage', 'fa') }}" data-language="fa"><i
+                                        class="flag-icon flag-icon-ir"></i>{{ __('pages/index.main-page') }}</a>
+                            </div>
                         </li>
                         <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand"><i
                                     class="ficon feather icon-maximize"></i></a></li>
@@ -242,11 +243,15 @@ License: You must have a valid license purchased only from themeforest(the above
                         </li>
                         <li class="dropdown dropdown-user nav-item"><a
                                 class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                                <div class="user-nav d-sm-flex d-none"><span class="user-name text-bold-600">{{ auth()->user()->meta->name }}</span><span class="user-status">دردسترس</span></div><span><img
-                                        class="round" src="{{ auth()->user()->image ? auth()->user()->image->url : '/storage/images/avatar.png'  }}"
+                                <div class="user-nav d-sm-flex d-none"><span
+                                        class="user-name text-bold-600">{{ auth()->user()->meta->name }}</span><span
+                                        class="user-status">دردسترس</span></div><span><img class="round"
+                                        src="{{ auth()->user()->image ? auth()->user()->image->url : '/storage/images/avatar.png' }}"
                                         alt="avatar" height="40" width="40"></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item"
+                                    href="{{ route('user.edit', auth()->user()->id) }}"><i
+                                        class="feather icon-user"></i> پروفایل</a><a class="dropdown-item"
                                     href="page-user-profile.html"><i class="feather icon-user"></i> ویرایش نمایه</a><a
                                     class="dropdown-item" href="app-email.html"><i class="feather icon-mail"></i> صندوق
                                     ورودی من</a><a class="dropdown-item" href="app-todo.html"><i
@@ -255,8 +260,9 @@ License: You must have a valid license purchased only from themeforest(the above
                                 <div class="dropdown-divider"></div>
                                 <form id="logout-form" action="{{ route('user.logout') }}" method="POST">
                                     @csrf
-                                    <a class="dropdown-item" href="javascript:{}" onclick="document.getElementById('logout-form').submit();""><i
-                                        class="feather icon-power"></i> خروج</a>
+                                    <a class="dropdown-item" href="javascript:{}"
+                                        onclick="document.getElementById('logout-form').submit();""><i
+                                        class=" feather icon-power"></i> خروج</a>
 
                                 </form>
                             </div>
@@ -319,7 +325,8 @@ License: You must have a valid license purchased only from themeforest(the above
                     <div class="avatar mr-50"><img src="../../../app-assets/images/portrait/small/avatar-s-8.jpg"
                             alt="png" height="32"></div>
                     <div class="search-data">
-                        <p class="search-data-title mb-0">{{ auth()->user()->meta->name }}</p><small class="text-muted">طراح رابط
+                        <p class="search-data-title mb-0">{{ auth()->user()->meta->name }}</p><small
+                            class="text-muted">طراح رابط
                             کاربری</small>
                     </div>
                 </div>
@@ -432,15 +439,20 @@ License: You must have a valid license purchased only from themeforest(the above
                 <li class=" nav-item"><a href="#"><i class="feather icon-user"></i><span class="menu-title"
                             data-i18n="User">کاربر</span></a>
                     <ul class="menu-content">
-                        <li><a href="app-user-list.html"><i class="feather icon-circle"></i><span class="menu-item"
-                                    data-i18n="List">لیست</span></a>
+                        <li><a href="{{ route('admin.usersList') }}"><i class="feather icon-circle"></i><span
+                                    class="menu-item" data-i18n="List">لیست</span></a>
                         </li>
-                        <li><a href="app-user-view.html"><i class="feather icon-circle"></i><span class="menu-item"
-                                    data-i18n="View">نمایش</span></a>
+                    </ul>
+                </li>
+                <li class=" nav-item"><a href="#"><i class="feather icon-user"></i><span class="menu-title"
+                            data-i18n="User">سطح دسترسی</span></a>
+                    <ul class="menu-content">
+                        <li><a href="{{ route('role.index') }}"><i class="feather icon-circle"></i><span
+                                    class="menu-item" data-i18n="List">لیست نقش ها</span></a>
                         </li>
-                        <li><a href="app-user-edit.html"><i class="feather icon-circle"></i><span class="menu-item"
-                                    data-i18n="Edit">ویرایش</span></a>
-                        </li>
+                        <li><a href="{{ route('permission.index') }}"><i class="feather icon-circle"></i><span
+                            class="menu-item" data-i18n="List">لیست سطح دسترسی</span></a>
+                </li>
                     </ul>
                 </li>
                 <li class=" navigation-header"><span>المان های رابط کاربری</span>
