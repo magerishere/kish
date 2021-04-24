@@ -2,6 +2,15 @@
 
 @section('header')
 <link rel="stylesheet" href="{{ asset('assets/backend/css/app-todo.min.css') }}">
+<style>
+    .modal-dialog{
+    overflow-y: initial !important
+}
+.modal-body{
+    height: 80vh;
+    overflow-y: auto;
+}
+</style>
 @endsection
 
 @section('content')
@@ -24,7 +33,7 @@
 
                           <hr>
 
-                            <h5 class="mt-2 mb-1 pt-25"><a href="{{ route('permission.index') }}">امتیازات</a></h5>
+                            <h5 class="mt-2 mb-1 pt-25"><a href="{{ route('permission.index') }}">سطح دسترسی ها</a></h5>
                             <div class="list-group list-group-labels font-medium-1">
                                 @foreach ($permissions as $permission)
                                 <a href="#"
@@ -59,53 +68,40 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <div class="todo-item-action ml-auto">
-                                            <a class="todo-item-info"><i class="feather icon-info"></i></a>
-                                            <a class="todo-item-favorite"><i class="feather icon-star"></i></a>
-                                            <div class="dropdown todo-item-label">
-                                                <i class="dropdown-toggle mr-0 mb-1 feather icon-tag" id="todoLabel"
-                                                    data-toggle="dropdown">
-                                                </i>
-                                                <div class="dropdown-menu dropdown-menu-right"
-                                                    aria-labelledby="todoLabel">
-                                                    @foreach ($permissions as $permission)
 
-                                                    <div class="dropdown-item">
-                                                        <div class="vs-checkbox-con">
-                                                            <input type="checkbox" value="{{ $permission->id }}"
-                                                                data-color="primary"
-                                                                data-value="{{ $permission->name }}">
-                                                            <span class="vs-checkbox">
-                                                                <span class="vs-checkbox--check">
-                                                                    <i class="vs-icon feather icon-check mr-0"></i>
-                                                                </span>
-                                                            </span>
-                                                            <span>{{ $permission->name }}</span>
-                                                        </div>
-                                                    </div>
-                                                    @endforeach
-                                                </div>
-                                            </div>
-                                        </div>
                                         <fieldset class="form-group">
                                             <input type="text" name="role" class="new-todo-item-title form-control"
                                                 placeholder="عنوان">
 
-                                        </fieldset>
-                                        @foreach ($permissions as $permission)
+                                            </fieldset>
 
-                                        <div class="title-wrapper d-flex">
-                                            <div class="vs-checkbox-con">
-                                                <input type="checkbox" class="permissionId" data-value="{{ $permission->name }}" value="{{ $permission->id }}">
-                                                <span class="vs-checkbox vs-checkbox-sm">
-                                                    <span class="vs-checkbox--check">
-                                                        <i class="vs-icon feather icon-check"></i>
-                                                    </span>
-                                                </span>
+                                            <div class="app-fixed-search">
+                                                <div class="sidebar-toggle d-block d-lg-none"><i class="feather icon-menu"></i>
+                                                </div>
+                                                <fieldset class="form-group position-relative has-icon-left m-0">
+                                                    <input type="search" class="form-control" id="permission-search" placeholder="جستجو...">
+                                                    <div class="form-control-position">
+                                                        <i class="feather icon-search"></i>
+                                                    </div>
+                                                </fieldset>
                                             </div>
-                                            <h6 class="todo-title mt-50 mx-50">{{ $permission->name }}</h6>
-                                        </div>
-                                        @endforeach
+                                            <div class="all-title-wrapper">
+
+                                                @foreach ($permissions as $permission)
+
+                                                <div class="title-wrapper" style="display: flex">
+                                                    <div class="vs-checkbox-con">
+                                                        <input type="checkbox" class="permissionId" data-value="{{ $permission->name }}" value="{{ $permission->id }}">
+                                                        <span class="vs-checkbox vs-checkbox-sm">
+                                                            <span class="vs-checkbox--check">
+                                                                <i class="vs-icon feather icon-check"></i>
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                    <h6 class="todo-title mt-50 mx-50">{{ $permission->name }}</h6>
+                                                </div>
+                                                @endforeach
+                                            </div>
 
                                     </div>
                                     <div class="modal-footer">
@@ -143,7 +139,7 @@
                                     <div class="sidebar-toggle d-block d-lg-none"><i class="feather icon-menu"></i>
                                     </div>
                                     <fieldset class="form-group position-relative has-icon-left m-0">
-                                        <input type="text" class="form-control" id="todo-search" placeholder="جستجو...">
+                                        <input type="search" class="form-control" id="todo-search" placeholder="جستجو...">
                                         <div class="form-control-position">
                                             <i class="feather icon-search"></i>
                                         </div>
@@ -226,43 +222,26 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <div class="todo-item-action ml-auto">
-                                                <a class="edit-todo-item-info todo-item-info"><i
-                                                        class="feather icon-info"></i></a>
-                                                <a class="edit-todo-item-favorite todo-item-favorite"><i
-                                                        class="feather icon-star"></i></a>
-                                                <div class="dropdown todo-item-label">
-                                                    <i class="dropdown-toggle mr-0 mb-1 feather icon-tag"
-                                                        id="todoEditLabel" data-toggle="dropdown">
-                                                    </i>
-                                                    <div class="dropdown-menu dropdown-menu-right"
-                                                        aria-labelledby="todoEditLabel">
-                                                        @foreach ($permissions as $permission)
 
-                                                        <div class="dropdown-item">
-                                                            <div class="vs-checkbox-con">
-                                                                <input type="checkbox" value="{{ $permission->id }}"
-                                                                    data-color="primary"
-                                                                    data-value="{{ $permission->name }}">
-                                                                <span class="vs-checkbox">
-                                                                    <span class="vs-checkbox--check">
-                                                                        <i class="vs-icon feather icon-check mr-0"></i>
-                                                                    </span>
-                                                                </span>
-                                                                <span>{{ $permission->name }}</span>
-                                                            </div>
-                                                        </div>
-                                                        @endforeach
-                                                    </div>
-                                                </div>
-                                            </div>
                                             <fieldset class="form-group">
                                                 <input type="text" class="edit-todo-item-title form-control"
                                                     placeholder="عنوان">
                                             </fieldset>
+                                            <div class="app-fixed-search">
+                                                <div class="sidebar-toggle d-block d-lg-none"><i class="feather icon-menu"></i>
+                                                </div>
+                                                <fieldset class="form-group position-relative has-icon-left m-0">
+                                                    <input type="search" class="form-control" id="permission-update-search" placeholder="جستجو...">
+                                                    <div class="form-control-position">
+                                                        <i class="feather icon-search"></i>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                            <div class="all-title-wrapper">
+
                                             @foreach ($permissions as $permission)
 
-                                        <div class="title-wrapper d-flex">
+                                        <div class="title-wrapper" style="display: flex">
                                             <div class="vs-checkbox-con">
                                                 <input type="checkbox" class="permissionIdUpdate" data-value="{{ $permission->name }}"  value="{{ $permission->id }}">
                                                 <span class="vs-checkbox vs-checkbox-sm">
@@ -274,6 +253,7 @@
                                             <h6 class="todo-title mt-50 mx-50">{{ $permission->name }}</h6>
                                         </div>
                                         @endforeach
+                                            </div>
                                         </div>
                                         <div class="modal-footer">
                                             <fieldset class="form-group position-relative has-icon-left mb-0">
@@ -309,47 +289,16 @@
 @section('footer')
 <script src="{{ asset('assets/backend/js/app-todo-roles.min.js') }}"></script>
 <script>
-    $('.searchPermissions').on('click',function() {
 
-        const parentName = $(this).data('value');
-        const roleName = $('.edit-todo-item-title').val();
-        const select = $(this).next();
-        let options;
-        if (select.find('option').length == 0) {
+      $('#addTaskModal').on('hidden.bs.modal', function () {
+            $('.title-wrapper').show();
+            $(this).find('input[type="search"]').val('');
 
-        $.ajax({
-            type: 'post',
-            url: '/role/search/permissions',
-            data: {parentName,roleName},
-            success:function(res) {
-                select.show();
-                // console.log(res.roleHasPermissions.id);
-                if(res.permissions.length > 1) {
-                    res.permissions.forEach(permission => {
-                        options += `<option value=${permission.id} `;
-                        res.roleHasPermissions.forEach(roleHasPermission => {
-                            if(permission.id == roleHasPermission.id)
-                            {
-                                options += "selected";
-                            }
-                        });
-                        options += `> ${permission.name} </option>`;
-                    });
-                    console.log(options);
-                        select.append(options);
-
-                } else {
-                    select.append('<option class="text-center" disabled>No child</option>');
-                }
-            },error:function(err) {
-                console.log(err);
-            },
-        });
-    } else {
-        select.toggle();
-    }
     });
+    $('#editTaskModal').on('hidden.bs.modal', function () {
+            $('.title-wrapper').show();
+            $(this).find('input[type="search"]').val('');
 
-
+    });
 </script>
 @endsection

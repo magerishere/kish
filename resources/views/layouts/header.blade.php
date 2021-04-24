@@ -27,10 +27,12 @@ License: You must have a valid license purchased only from themeforest(the above
     <title>تجزیه و تحلیل داشبورد - Vuexy - قالب مدیریتی نوین پردازش آروکو</title>
     <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
-  
+
 
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/backend/css/vendors-rtl.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/backend/css/toastr.css') }}">
+
     {{-- <link rel="stylesheet" type="text/css" href="{{ asset('assets/backend/css/apexcharts.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/backend/css/tether-theme-arrows.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/backend/css/tether.min.css') }}">
@@ -48,6 +50,9 @@ License: You must have a valid license purchased only from themeforest(the above
     <!-- BEGIN: Page CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/backend/css/vertical-menu.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/backend/css/palette-gradient.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/backend/css/toastr.min.css') }}">
+
+
     {{-- <link rel="stylesheet" type="text/css" href="{{ asset('assets/backend/css/dashboard-analytics.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/backend/css/card-analytics.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/backend/css/tour.min.css') }}"> --}}

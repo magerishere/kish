@@ -165,14 +165,14 @@
                                                 <div class="col-12">
                                                     <div class="table-responsive border rounded px-1 ">
                                                         <h6 class="border-bottom py-1 mx-1 mb-0 font-medium-2"><i
-                                                                class="feather icon-lock mr-50 "></i>اجازه</h6>
+                                                                class="feather icon-lock mr-50 "></i>سطح دسترسی</h6>
                                                         <table class="table table-borderless">
 
 
                                                             <tbody>
                                                                 @foreach ($user->roles as $role)
                                                                 <tr>
-                                                                    <td>{{ $role->name }}</td>
+                                                                    <td><strong>{{ $role->name }}</strong></td>
 
                                                                     @foreach($role->permissions as $permission)
                                                                     <td>

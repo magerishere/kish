@@ -2,6 +2,15 @@
 
 @section('header')
     <link rel="stylesheet" href="{{ asset('assets/backend/css/app-todo.min.css') }}">
+    <style>
+        .modal-dialog{
+        overflow-y: initial !important
+    }
+    .modal-body{
+        height: 80vh;
+        overflow-y: auto;
+    }
+    </style>
 @endsection
 
 @section('content')
@@ -16,11 +25,11 @@
   </span>
  <div class="todo-app-menu">
       <div class="form-group text-center add-task">
-          <button type="button" class="btn btn-primary btn-block my-1 waves-effect waves-light" data-toggle="modal" data-target="#addTaskModal">اضافه کردن امتیاز</button>
+          <button type="button" class="btn btn-primary btn-block my-1 waves-effect waves-light" data-toggle="modal" data-target="#addTaskModal">اضافه کردن سطح دسترسی</button>
       </div>
       <div class="sidebar-menu-list ps ps--active-y">
 
-         
+
           <hr>
           <h5 class="mt-2 mb-1 pt-25"><a href="{{ route('role.index') }}">نقش ها</a></h5>
           <div class="list-group list-group-labels font-medium-1">
@@ -40,7 +49,7 @@
       <form id="form-add-todo" class="todo-input" action="{{ route('role.store') }}" method="POST">
         @csrf
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">اضافه کردن امتیاز</h5>
+          <h5 class="modal-title" id="exampleModalLabel">اضافه کردن سطح دسترسی</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
@@ -73,12 +82,35 @@
           <fieldset class="form-group">
             <input type="text" name="role" class="new-todo-item-title form-control" placeholder="عنوان">
           </fieldset>
+          <div class="app-fixed-search">
+            <div class="sidebar-toggle d-block d-lg-none"><i class="feather icon-menu"></i>
+            </div>
+            <fieldset class="form-group position-relative has-icon-left m-0">
+                <input type="search" class="form-control" id="role-search" placeholder="جستجو...">
+                <div class="form-control-position">
+                    <i class="feather icon-search"></i>
+                </div>
+            </fieldset>
+        </div>
+          @foreach ($roles as $role)
 
+          <div class="title-wrapper" style="display: flex">
+              <div class="vs-checkbox-con">
+                  <input type="checkbox" class="roleId" data-value="{{ $role->name }}"  value="{{ $role->id }}">
+                  <span class="vs-checkbox vs-checkbox-sm">
+                      <span class="vs-checkbox--check">
+                          <i class="vs-icon feather icon-check"></i>
+                      </span>
+                  </span>
+              </div>
+              <h6 class="todo-title mt-50 mx-50">{{ $role->name }}</h6>
+          </div>
+          @endforeach
         </div>
         <div class="modal-footer">
           <fieldset class="form-group position-relative has-icon-left mb-0">
             <button type="button" class="btn btn-primary add-todo-item waves-effect waves-light" data-dismiss="modal"><i class="feather icon-check d-block d-lg-none"></i>
-              <span class="d-none d-lg-block">اضافه کردن امتیاز</span></button>
+              <span class="d-none d-lg-block">اضافه کردن سطح دسترسی</span></button>
           </fieldset>
           <fieldset class="form-group position-relative has-icon-left mb-0">
             <button type="button" class="btn btn-outline-light waves-effect waves-light" data-dismiss="modal"><i class="feather icon-x d-block d-lg-none"></i>
@@ -104,7 +136,7 @@
         <div class="app-fixed-search">
             <div class="sidebar-toggle d-block d-lg-none"><i class="feather icon-menu"></i></div>
             <fieldset class="form-group position-relative has-icon-left m-0">
-                <input type="text" class="form-control" id="todo-search" placeholder="جستجو...">
+                <input type="search" class="form-control" id="todo-search" placeholder="جستجو...">
                 <div class="form-control-position">
                     <i class="feather icon-search"></i>
                 </div>
@@ -166,7 +198,7 @@
       <form id="form-edit-todo" class="todo-input">
         <input type="hidden" class="permissionId" value="">
         <div class="modal-header">
-          <h5 class="modal-title" id="editTodoTask">ویرایش امتیاز</h5>
+          <h5 class="modal-title" id="editTodoTask">ویرایش سطح دسترسی</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
@@ -199,6 +231,31 @@
           <fieldset class="form-group">
             <input type="text" class="edit-todo-item-title form-control" placeholder="عنوان">
           </fieldset>
+
+          <div class="app-fixed-search">
+            <div class="sidebar-toggle d-block d-lg-none"><i class="feather icon-menu"></i>
+            </div>
+            <fieldset class="form-group position-relative has-icon-left m-0">
+                <input type="search" class="form-control" id="role-update-search" placeholder="جستجو...">
+                <div class="form-control-position">
+                    <i class="feather icon-search"></i>
+                </div>
+            </fieldset>
+        </div>
+          @foreach ($roles as $role)
+
+          <div class="title-wrapper" style="display: flex">
+              <div class="vs-checkbox-con">
+                  <input type="checkbox" class="roleIdUpdate" data-value="{{ $role->name }}"  value="{{ $role->id }}">
+                  <span class="vs-checkbox vs-checkbox-sm">
+                      <span class="vs-checkbox--check">
+                          <i class="vs-icon feather icon-check"></i>
+                      </span>
+                  </span>
+              </div>
+              <h6 class="todo-title mt-50 mx-50">{{ $role->name }}</h6>
+          </div>
+          @endforeach
         </div>
         <div class="modal-footer">
           <fieldset class="form-group position-relative has-icon-left mb-0">
@@ -226,4 +283,16 @@
 
 @section('footer')
   <script src="{{ asset('assets/backend/js/app-todo-permissions.min.js') }}"></script>
+  <script>
+
+      $('#addTaskModal').on('hidden.bs.modal', function () {
+            $('.title-wrapper').show();
+            $(this).find('input[type="search"]').val('');
+    });
+    $('#editTaskModal').on('hidden.bs.modal', function () {
+            $('.title-wrapper').show();
+            $(this).find('input[type="search"]').val('');
+
+    });
+  </script>
 @endsection

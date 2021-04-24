@@ -14,6 +14,7 @@
     <!-- BEGIN: Vendor JS-->
 
     <script src="{{ asset('assets/backend/js/vendors.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/toastr.min.js') }}"></script>
 
     <!-- BEGIN Vendor JS-->
 
@@ -29,7 +30,7 @@
     <script src="{{ asset('assets/backend/js/components.min.js') }}"></script>
     <script src="{{ asset('assets/backend/js/customizer.min.js') }}"></script>
     <script src="{{ asset('assets/backend/js/footer.min.js') }}"></script>
-    
+
     <!-- END: Theme JS-->
 
     <!-- BEGIN: Page JS-->
