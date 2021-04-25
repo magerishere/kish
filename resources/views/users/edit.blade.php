@@ -218,17 +218,39 @@
                                                                   <div class="card-body">
                                                                     <div class="col-xl-12 col-md-12 col-sm-12">
                                                                         <div class="card">
+                                                                            <div class="card-content">
+                                                                                <div class="card-body">
+                                                                                  <h4 class="card-title"> دعوت کارمند</h4>
+                                                                                </div>
+                                                                                <div class="card-body">
+                                                                                  <form class="form">
+                                                                                    <div class="form-body">
+
+                                                                                      <div class="form-group">
+                                                                                        <label for="feedback2" class="sr-only">ایمیل یا شماره موبایل</label>
+                                                                                        <input type="email" id="feedback" class="form-control" placeholder="ایمیل یا شماره موبایل" name="email">
+                                                                                      </div>
+                                                                                    </div>
+
+                                                                                    <div class="form-actions">
+                                                                                      <button type="button" onclick="inviteEmployee({{ auth()->user()->id }})" class="btn btn-primary mr-1 waves-effect waves-light"> ارسال لینک دعوت</button>
+                                                                                    </div>
+                                                                                  </form>
+                                                                                </div>
+                                                                              </div>
                                                                           <div class="card-content">
                                                                             <div class="card-body">
                                                                               <h4 class="card-title">جستجو کارمند</h4>
                                                                             </div>
                                                                             <div class="card-body">
                                                                               <form class="form">
+
                                                                                 <div class="form-body">
                                                                                     <div class="app-fixed-search">
                                                                                         <div class="sidebar-toggle d-block d-lg-none"><i class="feather icon-menu"></i></div>
                                                                                         <fieldset class="form-group position-relative has-icon-left m-0">
                                                                                             <input type="text" class="form-control" id="todo-search" placeholder="جستجو...">
+
                                                                                             <div class="form-control-position">
                                                                                                 <i class="feather icon-search"></i>
                                                                                             </div>
@@ -242,27 +264,7 @@
                                                                               </form>
                                                                             </div>
                                                                           </div>
-                                                                          <div class="card-content">
-                                                                            <div class="card-body">
-                                                                              <h4 class="card-title">یا دعوت کارمند</h4>
-                                                                            </div>
-                                                                            <div class="card-body">
-                                                                              <form class="form">
-                                                                                <div class="form-body">
 
-                                                                                  <div class="form-group">
-                                                                                    <label for="feedback2" class="sr-only">ایمیل یا شماره موبایل</label>
-                                                                                    <input type="email" id="feedback2" class="form-control" placeholder="ایمیل" name="email">
-                                                                                  </div>
-                                                                                </div>
-
-                                                                                <div class="form-actions">
-                                                                                  <button type="submit" class="btn btn-primary mr-1 waves-effect waves-light"> ارسال لینک دعوت</button>
-
-                                                                                </div>
-                                                                              </form>
-                                                                            </div>
-                                                                          </div>
                                                                         </div>
                                                                       </div>
                                                                 </div>
@@ -1156,6 +1158,7 @@
         const roles = document.getElementsByName('roles');
         const permissions = document.getElementsByName('permissions');
         let _changeInterval = null;
+        let spinner;
 
         roles.forEach(role => {
             if(role.checked) {
@@ -1167,6 +1170,7 @@
                 permissionIds.push(permission.value);
             }
         });
+
 
         $('#avatar-user').on('click',function() {
             document.getElementById('file-input').click();
@@ -1209,21 +1213,77 @@
             });
         }
 
-
-        $('#todo-search').on('keyup',function() {
-            const value = $(this).val();
-             clearInterval(_changeInterval)
-            _changeInterval = setInterval(function() {
-                $.ajax({
+        function inviteEmployee(id) {
+            const feedback = document.getElementById('feedback'); // can be email or phone number
+            const emailOrPhone = feedback.value;
+            $.ajax({
                 type: 'post',
-                url: '/search-employee',
-                data: {value},
+                url: '/invite-employee',
+                data: {employerId:id,emailOrPhone},
                 success:function(res) {
+                    toastr.success("Your invited has been sent");
+                    feedback.value = '';
                     console.log(res);
                 },error:function(err) {
                     console.log(err);
                 },
             });
+        }
+
+        // Search Employees by Employer // THIS CODE NOT USEFUL YET !!!
+        $('#todo-search').on('keyup',function() {
+            const value = $(this).val();
+            const that = $(this);
+            const users = $('.user-name');
+            const divUsers = $('.users');
+            let divUsersHtml;
+            if(users) users.remove();
+            if(divUsers) divUsers.remove();
+             clearInterval(_changeInterval);
+
+            if(!spinner) {
+                that.after('<div class="spinner-border" role="status"></div>');
+                spinner = $('.spinner-border');
+            }
+            if(value.length == 0) {
+                spinner.remove();
+                spinner = null;
+            }
+            _changeInterval = setInterval(function() {
+                if(value.length > 0) {
+                        $.ajax({
+                        type: 'post',
+                        url: '/search-employee',
+                        data: {value},
+                        success:function(res) {
+                            console.log(res.users[0].meta);
+                            spinner.remove();
+                            spinner = null;
+                            divUsersHtml = '<div class="row users">';
+                            if(res.users.length > 0) {
+
+                                res.users.forEach(item => {
+                                    divUsersHtml += `<div class="custom-control custom-checkbox">
+                                         <input type="checkbox" class="custom-control-input" value=${item.id} name="customCheck[]" id="customCheck${item.id}">
+                                     <label class="custom-control-label" for="customCheck${item.id}">${item.email}</label>
+                                       </div>
+                                  <span><img class="round" src="/storage/images/avatar.png" alt="avatar" height="40" width="40"></span>
+                                `;
+
+                                });
+                                divUsersHtml += '</div>';
+                                that.after(divUsersHtml);
+                            } else {
+                                that.after(`<p class="user-name">موردی یافت نشد</p>`);
+                            }
+                            // that.after('<span><img class="round" src="/storage/images/avatar.png" alt="avatar" height="40" width="40"></span>');
+                            // console.log(res);
+                        },error:function(err) {
+                            console.log(err);
+                        },
+                    });
+                }
+
                 clearInterval(_changeInterval)
             }, 2000);
 

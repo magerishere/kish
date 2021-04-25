@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Mail\ChangeUserProfileMail;
+use App\Mail\InviteEmployeeMail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -11,23 +11,21 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 
-class UpdateProfileEmailJob implements ShouldQueue
+class InviteEmployeeJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    private $email;
-    private $values;
+    private $email,$employerName,$id;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($email,$values)
+    public function __construct($email,$employerName,$id)
     {
         $this->email = $email;
-        $this->values = $values;
-
-
+        $this->employerName = $employerName;
+        $this->id = $id;
+        // dd($this);
     }
 
     /**
@@ -37,7 +35,7 @@ class UpdateProfileEmailJob implements ShouldQueue
      */
     public function handle()
     {
-        Mail::to($this->email)->send(new ChangeUserProfileMail($this->values));
+        Mail::to($this->email)->send(new InviteEmployeeMail($this->employerName,$this->id));
 
     }
 }

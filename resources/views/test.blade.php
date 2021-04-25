@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="{{ route('test') }}" method="POST">
+    <form action="{{ url('/invite-employee') }}" method="POST">
         @csrf
         <input type="email" name="email" id="email">
         <input type="password" name="password" id="password">

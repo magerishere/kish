@@ -7,6 +7,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\DemoController;
+use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\SmsController;
 use App\Http\Controllers\TicketController;
 use App\Models\User;
@@ -19,19 +20,12 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
 Route::get('/test',function() {
-    
+
     return view('test');
 });
 Route::post('/test',function(Request $request) {
-    $user = User::find(2);
-
-    dd(Auth::attempt(['email'=>$request->email,'password' => $request->password]));
-    if(Auth::attempt(['email' => $request->email, 'password' => $request->password]))
-    {
-        $request->session()->regenerate();
-        return redirect('/user');
-    }
-    return 'wrong';
+  
+    return view('test');
 })->name('test');
 
     Route::get('/',function(){
@@ -68,10 +62,15 @@ Route::post('/test',function(Request $request) {
         Route::post('/role/{id}/update/permissions',[RoleController::class,'updatePermissions'])->name('role.updatePermissions');
         Route::post('/user-list/{id}/role-permission-handler',[AdminController::class,'userListRolePermissionHandler']);
         Route::post('/role/search/permissions',[RoleController::class,'searchPermissions']);
+    });
 
+    Route::middleware(['auth', 'employer'])->group(function () {
+        Route::post('/search-employee',[EmployerController::class,'search']);
+        Route::post('/invite-employee',[EmployerController::class,'invite']);
     });
 
     Route::middleware('auth')->group(function () {
+
         Route::post('/logout',[UserController::class,'logout'])->name('user.logout');
         Route::post('/ticket-child',[TicketController::class,'childTicket'])->name('ticket.child');
     });
@@ -88,8 +87,6 @@ Route::post('/test',function(Request $request) {
 | Get Routes
 |--------------------------------------------------------------------------
 */
-
-
     Route::middleware(['auth','admin'])->group(function () {
         Route::get('/users-list',[AdminController::class,'usersList'])->name('admin.usersList');
         Route::get('/user-list/{id}',[AdminController::class,'userList'])->name('admin.userList');
@@ -116,7 +113,7 @@ Route::post('/test',function(Request $request) {
 
         return redirect()->back();
     })->name('setLanguage');
-
+    Route::get('/accept-invite-employer/{id}',[EmployerController::class,'acceptInvite']);
     Route::get('/user-setting',function() {
         return view('users.setting');
     })->name('user.setting');
