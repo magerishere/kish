@@ -8,6 +8,7 @@ use App\Http\Controllers\RoleService\Index;
 use App\Http\Controllers\RoleService\Store;
 use App\Http\Controllers\RoleService\Update;
 use App\Http\Controllers\RoleService\UpdatePermissions;
+use App\Http\Requests\RoleRequest;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -40,7 +41,7 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RoleRequest $request)
     {
         return app(Store::class)($request);
     }
@@ -74,7 +75,7 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(RoleRequest $request, $id)
     {
        return app(Update::class)($request,$id);
     }

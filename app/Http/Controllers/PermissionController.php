@@ -6,6 +6,7 @@ use App\Http\Controllers\PermissionService\Destroy;
 use App\Http\Controllers\PermissionService\Index;
 use App\Http\Controllers\PermissionService\Store;
 use App\Http\Controllers\PermissionService\Update;
+use App\Http\Requests\PermissionRequest;
 use Illuminate\Http\Request;
 
 
@@ -38,7 +39,7 @@ class PermissionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PermissionRequest $request)
     {
         return app(Store::class)($request);
     }
@@ -72,7 +73,7 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PermissionRequest $request, $id)
     {
         return app(Update::class)($request,$id);
     }

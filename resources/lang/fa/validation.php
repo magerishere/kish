@@ -15,6 +15,7 @@ return [
     'integer' => ':attribute باید عدد باشد',
     'boolean' => 'کد :attribute دستکاری کردی!',
     'confirmed' => ':attribute با تکرار آن همخوانی ندارد',
+    'unique' => ':attribute قبلا انتخاب شده است!',
     'custom' => [
         'name' => [
             'regex' => ':attribute نباید شامل عدد باشد',

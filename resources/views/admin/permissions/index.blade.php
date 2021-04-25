@@ -81,6 +81,7 @@
           </div>
           <fieldset class="form-group">
             <input type="text" name="role" class="new-todo-item-title form-control" placeholder="عنوان">
+
           </fieldset>
           <div class="app-fixed-search">
             <div class="sidebar-toggle d-block d-lg-none"><i class="feather icon-menu"></i>
@@ -92,6 +93,21 @@
                 </div>
             </fieldset>
         </div>
+        <div class="title-wrapper" style="display: flex">
+            <div class="vs-checkbox-con">
+                <input type="checkbox" id="checkBoxAllRoles">
+                <span class="vs-checkbox vs-checkbox-sm">
+                    <span class="vs-checkbox--check">
+                        <i class="vs-icon feather icon-check"></i>
+                    </span>
+                </span>
+            </div>
+            <h6 class="todo-title mt-50 mx-50">انتخاب همه
+
+        </div>
+        <hr>
+        <div class="all-title-wrapper">
+
           @foreach ($roles as $role)
 
           <div class="title-wrapper" style="display: flex">
@@ -107,9 +123,11 @@
           </div>
           @endforeach
         </div>
+
+        </div>
         <div class="modal-footer">
           <fieldset class="form-group position-relative has-icon-left mb-0">
-            <button type="button" class="btn btn-primary add-todo-item waves-effect waves-light" data-dismiss="modal"><i class="feather icon-check d-block d-lg-none"></i>
+            <button type="button" class="btn btn-primary add-todo-item waves-effect waves-light"><i class="feather icon-check d-block d-lg-none"></i>
               <span class="d-none d-lg-block">اضافه کردن سطح دسترسی</span></button>
           </fieldset>
           <fieldset class="form-group position-relative has-icon-left mb-0">
@@ -242,6 +260,19 @@
                 </div>
             </fieldset>
         </div>
+        <div class="title-wrapper" style="display: flex">
+            <div class="vs-checkbox-con">
+                <input type="checkbox" id="checkBoxAllRolesUpdate">
+                <span class="vs-checkbox vs-checkbox-sm">
+                    <span class="vs-checkbox--check">
+                        <i class="vs-icon feather icon-check"></i>
+                    </span>
+                </span>
+            </div>
+            <h6 class="todo-title mt-50 mx-50">انتخاب همه
+
+        </div>
+        <hr>
           @foreach ($roles as $role)
 
           <div class="title-wrapper" style="display: flex">
@@ -259,7 +290,7 @@
         </div>
         <div class="modal-footer">
           <fieldset class="form-group position-relative has-icon-left mb-0">
-            <button type="button" class="btn btn-primary update-todo-item waves-effect waves-light" data-dismiss="modal"><i class="feather icon-edit d-block d-lg-none"></i>
+            <button type="button" class="btn btn-primary update-todo-item waves-effect waves-light"><i class="feather icon-edit d-block d-lg-none"></i>
               <span class="d-none d-lg-block">به روز رسانی</span></button>
           </fieldset>
           <fieldset class="form-group position-relative has-icon-left mb-0">
@@ -286,13 +317,31 @@
   <script>
 
       $('#addTaskModal').on('hidden.bs.modal', function () {
-            $('.title-wrapper').show();
+        $('.title-wrapper').show();
             $(this).find('input[type="search"]').val('');
+            $('.roleId').prop('checked', 0);
+            $('#checkBoxAllRoles').prop('checked', 0);
     });
     $('#editTaskModal').on('hidden.bs.modal', function () {
-            $('.title-wrapper').show();
+        $('.title-wrapper').show();
             $(this).find('input[type="search"]').val('');
-
+            $('.roleIdUpdate').prop('checked', 0);
+            $('#checkBoxAllRolesUpdate').prop('checked', 0);
     });
+    $('#checkBoxAllRoles').on('click', function() {
+            if (document.getElementById('checkBoxAllRoles').checked) {
+                $('.roleId').prop('checked', 1);
+            } else {
+                $('.roleId').prop('checked', 0);
+            }
+        });
+
+        $('#checkBoxAllRolesUpdate').on('click', function() {
+            if (document.getElementById('checkBoxAllRolesUpdate').checked) {
+                $('.roleIdUpdate').prop('checked', 1);
+            } else {
+                $('.roleIdUpdate').prop('checked', 0);
+            }
+        });
   </script>
 @endsection

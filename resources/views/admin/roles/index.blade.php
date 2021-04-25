@@ -90,18 +90,22 @@
                                                     </div>
                                                 </fieldset>
                                             </div>
+
                                             <div class="all-title-wrapper">
                                                 <div class="title-wrapper" style="display: flex">
                                                     <div class="vs-checkbox-con">
-                                                        <input type="checkbox" class="permissionId" data-value="" value="">
+                                                        <input type="checkbox" id="checkBoxAllPermissions">
                                                         <span class="vs-checkbox vs-checkbox-sm">
                                                             <span class="vs-checkbox--check">
                                                                 <i class="vs-icon feather icon-check"></i>
                                                             </span>
                                                         </span>
                                                     </div>
+                                                    <h6 class="todo-title mt-50 mx-50">انتخاب همه</h6>
+
                                                 </div>
                                                 <hr>
+
                                                 @foreach ($permissions as $permission)
 
                                                     <div class="title-wrapper" style="display: flex">
@@ -124,8 +128,7 @@
                                         <div class="modal-footer">
                                             <fieldset class="form-group position-relative has-icon-left mb-0">
                                                 <button type="button"
-                                                    class="btn btn-primary add-todo-item waves-effect waves-light"
-                                                    data-dismiss="modal"><i
+                                                    class="btn btn-primary add-todo-item waves-effect waves-light"><i
                                                         class="feather icon-check d-block d-lg-none"></i>
                                                     <span class="d-none d-lg-block">اضافه کردن نقش</span></button>
                                             </fieldset>
@@ -233,7 +236,7 @@
                                 <div class="modal-content">
                                     <section class="todo-form">
                                         <form id="form-edit-todo" class="todo-input">
-                                            <input type="hidden" class="roleId" value="">
+                                            <input type="checkbox" class="roleId" value="">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="editTodoTask">ویرایش نقش</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -259,7 +262,19 @@
                                                     </fieldset>
                                                 </div>
                                                 <div class="all-title-wrapper">
+                                                    <div class="title-wrapper" style="display: flex">
+                                                        <div class="vs-checkbox-con">
+                                                            <input type="checkbox" id="checkBoxAllPermissionsUpdate">
+                                                            <span class="vs-checkbox vs-checkbox-sm">
+                                                                <span class="vs-checkbox--check">
+                                                                    <i class="vs-icon feather icon-check"></i>
+                                                                </span>
+                                                            </span>
+                                                        </div>
+                                                        <h6 class="todo-title mt-50 mx-50">انتخاب همه
 
+                                                    </div>
+                                                    <hr>
                                                     @foreach ($permissions as $permission)
 
                                                         <div class="title-wrapper" style="display: flex">
@@ -283,7 +298,7 @@
                                                 <fieldset class="form-group position-relative has-icon-left mb-0">
                                                     <button type="button"
                                                         class="btn btn-primary update-todo-item waves-effect waves-light"
-                                                        data-dismiss="modal"><i
+                                                        ><i
                                                             class="feather icon-edit d-block d-lg-none"></i>
                                                         <span class="d-none d-lg-block">به روز رسانی</span></button>
                                                 </fieldset>
@@ -316,12 +331,35 @@
         $('#addTaskModal').on('hidden.bs.modal', function() {
             $('.title-wrapper').show();
             $(this).find('input[type="search"]').val('');
+            $('.permissionId').prop('checked', 0);
+            $('#checkBoxAllPermissions').prop('checked', 0);
+            $('.permissionIdUpdate').prop('checked', 0);
+            $('#checkBoxAllPermissionsUpdate').prop('checked', 0);
 
         });
         $('#editTaskModal').on('hidden.bs.modal', function() {
             $('.title-wrapper').show();
             $(this).find('input[type="search"]').val('');
+            $('.permissionId').prop('checked', 0);
+            $('#checkBoxAllPermissions').prop('checked', 0);
+            $('.permissionIdUpdate').prop('checked', 0);
+            $('#checkBoxAllPermissionsUpdate').prop('checked', 0);
+        });
 
+        $('#checkBoxAllPermissions').on('click', function() {
+            if (document.getElementById('checkBoxAllPermissions').checked) {
+                $('.permissionId').prop('checked', 1);
+            } else {
+                $('.permissionId').prop('checked', 0);
+            }
+        });
+
+        $('#checkBoxAllPermissionsUpdate').on('click', function() {
+            if (document.getElementById('checkBoxAllPermissionsUpdate').checked) {
+                $('.permissionIdUpdate').prop('checked', 1);
+            } else {
+                $('.permissionIdUpdate').prop('checked', 0);
+            }
         });
 
     </script>
