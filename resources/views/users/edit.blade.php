@@ -158,9 +158,7 @@
                                                         </table>
                                                     </div>
                                                 </div>
-                                                @endrole
 
-                                                @role('admin')
                                                 @if ($user->hasAnyRole($roles))
                                                 <div class="col-12">
                                                     <div class="table-responsive border rounded px-1 ">
@@ -178,12 +176,7 @@
                                                                     <td>
 
                                                                         <input type="checkbox" name="permissions" value="{{ $permission->id }}" {{ $user->hasAnyDirectPermission($permission->id) ? 'checked' : '' }}>
-                                                                        {{-- <div class="custom-control custom-checkbox"><input
-                                                                            type="checkbox" value="{{ $permission->id }}" id="{{ $permission->id }}"
-                                                                            class="custom-control-input" name="permissions" {{ $user->hasPermissionTo($permission->id) ? 'checked' : '' }}>
-                                                                            <label class="custom-control-label"
-                                                                            for="{{ $permission->id }}"></label>
-                                                                        </div> --}}
+
                                                                         <span>{{ $permission->name }}</span>
                                                                     </td>
                                                                     @endforeach
@@ -203,12 +196,84 @@
 
                                                 </div>
                                                 @else
+
                                                 <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
                                                     <button type="submit"
                                                         class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1 waves-effect waves-light">
                                                         ذخیره تغییرات</button>
 
                                                 </div>
+                                                    @role('Employer')
+                                                    <hr>
+                                                    <div class="col-xl-4 col-md-6 col-sm-12">
+                                                        <div class="card collapse-icon accordion-icon-rotate">
+                                                          <div class="card-body">
+                                                            <div class="accordion" id="accordionExample" data-toggle-hover="true">
+
+                                                              <div class="collapse-margin">
+                                                                <div class="card-header collapsed" id="headingFour" data-toggle="collapse" role="button" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                                                  <span class="lead collapse-title"> ایجاد کارمند</span>
+                                                                </div>
+                                                                <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample" style="">
+                                                                  <div class="card-body">
+                                                                    <div class="col-xl-12 col-md-12 col-sm-12">
+                                                                        <div class="card">
+                                                                          <div class="card-content">
+                                                                            <div class="card-body">
+                                                                              <h4 class="card-title">جستجو کارمند</h4>
+                                                                            </div>
+                                                                            <div class="card-body">
+                                                                              <form class="form">
+                                                                                <div class="form-body">
+                                                                                    <div class="app-fixed-search">
+                                                                                        <div class="sidebar-toggle d-block d-lg-none"><i class="feather icon-menu"></i></div>
+                                                                                        <fieldset class="form-group position-relative has-icon-left m-0">
+                                                                                            <input type="text" class="form-control" id="todo-search" placeholder="جستجو...">
+                                                                                            <div class="form-control-position">
+                                                                                                <i class="feather icon-search"></i>
+                                                                                            </div>
+                                                                                        </fieldset>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="form-actions">
+                                                                                  <button type="submit" class="btn btn-primary mr-1 waves-effect waves-light">اضافه کردن</button>
+
+                                                                                </div>
+                                                                              </form>
+                                                                            </div>
+                                                                          </div>
+                                                                          <div class="card-content">
+                                                                            <div class="card-body">
+                                                                              <h4 class="card-title">یا دعوت کارمند</h4>
+                                                                            </div>
+                                                                            <div class="card-body">
+                                                                              <form class="form">
+                                                                                <div class="form-body">
+
+                                                                                  <div class="form-group">
+                                                                                    <label for="feedback2" class="sr-only">ایمیل یا شماره موبایل</label>
+                                                                                    <input type="email" id="feedback2" class="form-control" placeholder="ایمیل" name="email">
+                                                                                  </div>
+                                                                                </div>
+
+                                                                                <div class="form-actions">
+                                                                                  <button type="submit" class="btn btn-primary mr-1 waves-effect waves-light"> ارسال لینک دعوت</button>
+
+                                                                                </div>
+                                                                              </form>
+                                                                            </div>
+                                                                          </div>
+                                                                        </div>
+                                                                      </div>
+                                                                </div>
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+
+                                                    @endrole
                                                 @endrole
 
                                             </div>
@@ -951,7 +1016,7 @@
                                                     <div class="form-group">
                                                         <div class="controls">
                                                             <label> رمزعبور</label>
-                                                            <input type="text" class="form-control" name="password"
+                                                            <input type="password" class="form-control" name="password"
                                                                 placeholder="رمزعبور"
                                                                 required=""
                                                                 data-validation-required-message="This name field is required">
@@ -961,7 +1026,7 @@
                                                     <div class="form-group">
                                                         <div class="controls">
                                                             <label>تکرار رمزعبور</label>
-                                                            <input type="text" class="form-control" name="password_confirmation"
+                                                            <input type="password" class="form-control" name="password_confirmation"
                                                              placeholder="تکرار رمزعبور"
                                                             required=""
                                                             data-validation-required-message="This name field is required">
@@ -1090,6 +1155,7 @@
         let permissionIds = [];
         const roles = document.getElementsByName('roles');
         const permissions = document.getElementsByName('permissions');
+        let _changeInterval = null;
 
         roles.forEach(role => {
             if(role.checked) {
@@ -1101,8 +1167,6 @@
                 permissionIds.push(permission.value);
             }
         });
-
-
 
         $('#avatar-user').on('click',function() {
             document.getElementById('file-input').click();
@@ -1145,6 +1209,25 @@
             });
         }
 
+
+        $('#todo-search').on('keyup',function() {
+            const value = $(this).val();
+             clearInterval(_changeInterval)
+            _changeInterval = setInterval(function() {
+                $.ajax({
+                type: 'post',
+                url: '/search-employee',
+                data: {value},
+                success:function(res) {
+                    console.log(res);
+                },error:function(err) {
+                    console.log(err);
+                },
+            });
+                clearInterval(_changeInterval)
+            }, 2000);
+
+        });
 
     </script>
 @endsection

@@ -9,9 +9,13 @@ class Update {
     public function __invoke($request,$id)
     {
         try{
-            $permission = Permission::findById($id);
+            $permission = Permission::findById(decrypt($id));
             $permission->update(['name'=>$request->name]);
-            $permission->syncRoles($request->roleIds);
+            foreach($request->roleIds as $id)
+            {
+                 $permission->assignRole(decrypt($id));
+            }
+
 
         } catch(Throwable $e) {
             return back()

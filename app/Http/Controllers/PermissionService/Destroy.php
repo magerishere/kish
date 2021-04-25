@@ -10,7 +10,7 @@ class Destroy {
     {
         try{
 
-            $permission = Permission::findOrFail($id);
+            $permission = Permission::findOrFail(decrypt($id));
             $permission->delete();
         } catch(Throwable $e) {
             return back()

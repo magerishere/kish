@@ -14,11 +14,12 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
 Route::get('/test',function() {
-    dd(bcrypt('12345678'));
+    
     return view('test');
 });
 Route::post('/test',function(Request $request) {

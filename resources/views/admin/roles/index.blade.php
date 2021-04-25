@@ -112,7 +112,7 @@
                                                         <div class="vs-checkbox-con">
                                                             <input type="checkbox" class="permissionId"
                                                                 data-value="{{ $permission->name }}"
-                                                                value="{{ $permission->id }}">
+                                                                value="{{ encrypt($permission->id) }}">
                                                             <span class="vs-checkbox vs-checkbox-sm">
                                                                 <span class="vs-checkbox--check">
                                                                     <i class="vs-icon feather icon-check"></i>
@@ -176,7 +176,7 @@
                                                             <div class="title-wrapper d-flex">
                                                                 <div class="vs-checkbox-con">
                                                                     <input type="checkbox" class="roleId"
-                                                                        value="{{ $role->id }}">
+                                                                        value="{{ encrypt($role->id) }}">
                                                                     <span class="vs-checkbox vs-checkbox-sm">
                                                                         <span class="vs-checkbox--check">
                                                                             <i class="vs-icon feather icon-check"></i>
@@ -204,7 +204,7 @@
                                                             <a class="todo-item-info"><i class="feather icon-info"></i></a>
                                                             <a class="todo-item-favorite"><i
                                                                     class="feather icon-star"></i></a>
-                                                            <a class="todo-item-delete" data-value="{{ $role->id }}"><i
+                                                            <a class="todo-item-delete" data-value="{{ encrypt($role->id) }}"><i
                                                                     class="feather icon-trash"></i></a>
                                                         </div>
                                                     </div>
@@ -281,7 +281,7 @@
                                                             <div class="vs-checkbox-con">
                                                                 <input type="checkbox" class="permissionIdUpdate"
                                                                     data-value="{{ $permission->name }}"
-                                                                    value="{{ $permission->id }}">
+                                                                    value="{{ encrypt($permission->id) }}">
                                                                 <span class="vs-checkbox vs-checkbox-sm">
                                                                     <span class="vs-checkbox--check">
                                                                         <i class="vs-icon feather icon-check"></i>

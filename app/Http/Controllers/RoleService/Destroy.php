@@ -9,7 +9,7 @@ class Destroy {
     public function __invoke($id)
     {
         try{
-            $role = Role::findOrFail($id);
+            $role = Role::findOrFail(decrypt($id));
             $role->delete();
 
         } catch(Throwable $e) {

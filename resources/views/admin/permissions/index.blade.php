@@ -66,7 +66,7 @@
 
                     <div class="dropdown-item">
                         <div class="vs-checkbox-con">
-                            <input type="checkbox" value="{{ $role->id }}" data-color="primary" data-value="{{ $role->name }}">
+                            <input type="checkbox" value="{{ encrypt($role->id) }}" data-color="primary" data-value="{{ $role->name }}">
                             <span class="vs-checkbox">
                                 <span class="vs-checkbox--check">
                                     <i class="vs-icon feather icon-check mr-0"></i>
@@ -112,7 +112,7 @@
 
           <div class="title-wrapper" style="display: flex">
               <div class="vs-checkbox-con">
-                  <input type="checkbox" class="roleId" data-value="{{ $role->name }}"  value="{{ $role->id }}">
+                  <input type="checkbox" class="roleId" data-value="{{ $role->name }}"  value="{{ encrypt($role->id) }}">
                   <span class="vs-checkbox vs-checkbox-sm">
                       <span class="vs-checkbox--check">
                           <i class="vs-icon feather icon-check"></i>
@@ -169,7 +169,7 @@
                   <div class="todo-title-area d-flex align-items-center">
                     <div class="title-wrapper d-flex">
                       <div class="vs-checkbox-con">
-                          <input type="checkbox" class="permissionId" value="{{ $permission->id }}">
+                          <input type="checkbox" class="permissionId" value="{{ encrypt($permission->id) }}">
                           <span class="vs-checkbox vs-checkbox-sm">
                             <span class="vs-checkbox--check">
                               <i class="vs-icon feather icon-check"></i>
@@ -193,7 +193,7 @@
                   <div class="float-right todo-item-action d-flex">
                     <a class="todo-item-info"><i class="feather icon-info"></i></a>
                     <a class="todo-item-favorite"><i class="feather icon-star"></i></a>
-                    <a class="todo-item-delete" data-value="{{ $permission->id }}"><i class="feather icon-trash"></i></a>
+                    <a class="todo-item-delete" data-value="{{ encrypt($permission->id) }}"><i class="feather icon-trash"></i></a>
                   </div>
                 </div>
 
@@ -233,7 +233,7 @@
 
                     <div class="dropdown-item">
                         <div class="vs-checkbox-con">
-                            <input type="checkbox" value="{{ $role->id }}" data-color="primary" data-value="{{ $role->name }}">
+                            <input type="checkbox" value="{{ encrypt($role->id) }}" data-color="primary" data-value="{{ $role->name }}">
                             <span class="vs-checkbox">
                                 <span class="vs-checkbox--check">
                                     <i class="vs-icon feather icon-check mr-0"></i>
@@ -277,7 +277,7 @@
 
           <div class="title-wrapper" style="display: flex">
               <div class="vs-checkbox-con">
-                  <input type="checkbox" class="roleIdUpdate" data-value="{{ $role->name }}"  value="{{ $role->id }}">
+                  <input type="checkbox" class="roleIdUpdate" data-value="{{ $role->name }}"  value="{{ encrypt($role->id) }}">
                   <span class="vs-checkbox vs-checkbox-sm">
                       <span class="vs-checkbox--check">
                           <i class="vs-icon feather icon-check"></i>

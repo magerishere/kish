@@ -10,7 +10,10 @@ class Store {
     {
         try {
            $permission =  Permission::create(['name'=>$request->input('name')]);
-           $permission->assignRole($request->roleIds);
+           foreach($request->roleIds as $id)
+           {
+                $permission->assignRole(decrypt($id));
+           }
         } catch(Throwable $exception) {
             return back()
                 ->withError('cannot store permission' . $exception);
